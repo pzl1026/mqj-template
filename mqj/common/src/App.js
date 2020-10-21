@@ -1,15 +1,17 @@
-import React from 'react';
+import React from "react";
 
-function loadComponent(scope, module, frame = 'react') {
+function loadComponent(scope, module) {
+  console.log(scope, module, 'module')
   return async () => {
     // Initializes the share scope. This fills it with known provided modules from this build and all remotes
-    await __webpack_init_sharing__('default');
+    await __webpack_init_sharing__("default");
+
     const container = window[scope]; // or get the container somewhere else
+    console.log(container, 'container')
+    // Initialize the container, it may provide shared modules
     await container.init(__webpack_share_scopes__.default);
     const factory = await window[scope].get(module);
-    console.log(2222);
     const Module = factory();
-    console.log(Module, 'dddd');
     return Module;
   };
 }
@@ -23,10 +25,10 @@ const useDynamicScript = (args) => {
       return;
     }
 
-    const element = document.createElement('script');
+    const element = document.createElement("script");
 
     element.src = args.url;
-    element.type = 'text/javascript';
+    element.type = "text/javascript";
     element.async = true;
 
     setReady(false);
@@ -58,7 +60,6 @@ const useDynamicScript = (args) => {
 };
 
 function System(props) {
-  console.log(props, 'ppp');
   const { ready, failed } = useDynamicScript({
     url: props.system && props.system.url,
   });
@@ -75,19 +76,8 @@ function System(props) {
     return <h2>Failed to load dynamic script: {props.system.url}</h2>;
   }
 
-  if (props.system.frame == 'vue') {
-    console.log('props.system');
-    loadComponent(
-      props.system.scope,
-      props.system.module,
-      props.system.frame
-    )();
-    return '';
-  } else {
-  }
-  console.log(document.getElementById('app'));
   const Component = React.lazy(
-    loadComponent(props.system.scope, props.system.module, 'react')
+    loadComponent(props.system.scope, props.system.module)
   );
 
   return (
@@ -101,32 +91,20 @@ function App() {
   const [system, setSystem] = React.useState(undefined);
 
   function setApp2() {
-    let aa = setSystem({
-      url: 'http://localhost:3002/remoteEntry.js',
-      scope: 'app2',
-      module: './Widget',
-      frame: 'react',
+    setSystem({
+      url: "http://localhost:3002/remoteEntry.js",
+      scope: "app2",
+      module: "./Widget",
     });
-    console.log(aa, '888');
   }
 
   function setApp3() {
     setSystem({
-      url: 'http://localhost:3003/remoteEntry.js',
-      scope: 'app3',
-      module: './Widget',
-      frame: 'react',
+      url: "http://localhost:3003/remoteEntry.js",
+      scope: "app3",
+      module: "./Widget",
     });
   }
-
-  // function setApp4() {
-  //   setSystem({
-  //     url: 'http://localhost:3004/remoteEntry.js',
-  //     scope: 'app4',
-  //     module: './Widget',
-  //     frame: 'vue',
-  //   });
-  // }
 
   return (
     <div
@@ -138,14 +116,13 @@ function App() {
       <h1>Dynamic System Host</h1>
       <h2>App 1</h2>
       <p>
-        The Dynamic System will take advantage Module Federation{' '}
+        The Dynamic System will take advantage Module Federation{" "}
         <strong>remotes</strong> and <strong>exposes</strong>. It will no load
         components that have been loaded already.
       </p>
       <button onClick={setApp2}>Load App 2 Widget</button>
       <button onClick={setApp3}>Load App 3 Widget</button>
-      {/* <button onClick={setApp4}>Load App 4 Widget</button> */}
-      <div style={{ marginTop: '10em' }}>
+      <div style={{ marginTop: "2em" }}>
         <System system={system} />
       </div>
     </div>

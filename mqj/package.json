@@ -18,5 +18,8 @@
   },
   "workspaces": [
     "./*"
-  ]
+  ],
+  "dependencies": {
+    "react-router": "^5.2.0"
+  }
 }

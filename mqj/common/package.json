@@ -11,6 +11,7 @@
     "postcss-import": "^12.0.1",
     "postcss-loader": "^4.0.4",
     "postcss-url": "^8.0.0",
+    "rc-tween-one": "^2.7.3",
     "sass": "^1.27.0",
     "sass-loader": "^10.0.3",
     "serve": "11.3.2",
@@ -31,6 +32,7 @@
     "rc-queue-anim": "^1.8.5",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-draggable": "^4.4.3"
+    "react-draggable": "^4.4.3",
+    "vue": "^2.6.12"
   }
 }

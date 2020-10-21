@@ -1,18 +1,26 @@
+const path = require('path');
+
 module.exports = {
   name: 'common',
   isTop: true,
   shared: {
-    react: { singleton: true },
+    react: {
+      singleton: true, // only a single version of the shared module is allowed
+    },
     'react-dom': { singleton: true },
     vue: { singleton: true },
   },
+  // library: { type: "var", name: "common" },
   dev: {
     st1: {
       port: '3001',
       nomocker: false,
       remotes: {
-        app3: 'vue@http://localhost:3003/remoteEntry.js',
-        app2: 'react@http://localhost:3002/remoteEntry.js',
+        app3: 'app3@http://localhost:3003/remoteEntry.js',
+        // app2: 'app2@http://localhost:3002/remoteEntry.js',
+      },
+      exposes: {
+        './C1': path.resolve(__dirname, 'src/widgets/test/index'),
       },
       devServer: {
         proxy: {

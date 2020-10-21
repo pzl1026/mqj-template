@@ -1,16 +1,28 @@
 import React, {useState, useCallback} from 'react';
 import ReactDOM from 'react-dom';
 import { Layout, Menu, Dropdown, Avatar, Row, Col, Button} from 'antd';
+import { Router, Route, Link } from 'react-router'
 import { UserOutlined, DownOutlined, MailOutlined, AppstoreOutlined, SettingOutlined, CloseOutlined } from '@ant-design/icons';
 import QueueAnim from 'rc-queue-anim';
 import Draggable from 'react-draggable';
-import {getNavByUrl} from '@/mqj/index';
+import mqj from '@/mqj/index';
+import {navs} from './data';
+import RecentNav from './recentNav';
 import 'antd/dist/antd.css';
 import './index.scss';
 // console.log(getNavByUrl(), 'uuu')
 const { Header, Content, Footer } = Layout;
 const { SubMenu } = Menu;
-const moduleMenu = getNavByUrl();
+const nav = new mqj.Nav(navs);
+const moduleMenu = nav.currModuleMenu;
+console.log(moduleMenu, 'currentModule')
+console.log(new mqj.HistoryStore(), 'HistostyStore')
+
+setTimeout(() => {
+  console.log('pushState')
+  history.pushState({bar: 11}, '', '/goods#/list');
+}, 4000)
+
 
 function MenuAdmin(props){
   return (
@@ -153,9 +165,7 @@ export default function Widget() {
           </Dropdown>
         </div>
       </Header>
-      <div>
-        
-      </div>
+      <RecentNav />
       {/* <Button onClick={() => handleModuleShow(true)}>打开</Button> */}
       {/* <Modal>
       <Draggable

@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  name: 'vue',
+  name: 'app3',
   isTop: false,
   shared: [{ vue: { singleton: true } }],
   // library: { type: 'var', name: 'vue' },   //如果需要remotes，就应该将该属性屏蔽
@@ -11,9 +11,12 @@ module.exports = {
       nomocker: false,
       exposes: {
         './Widget': path.resolve(__dirname, 'src/index'),
+        './app': path.resolve(__dirname, 'src/App.vue'),
+        './test': path.resolve(__dirname, 'src/test'),
       },
       remotes: {
-        app2: 'react@http://localhost:3002/remoteEntry.js',
+        // app2: 'app2@http://localhost:3002/remoteEntry.js',
+        common: 'common@http://localhost:3001/remoteEntry.js'
       },
       devServer: {
         proxy: {
