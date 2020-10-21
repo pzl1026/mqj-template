@@ -1,0 +1,1 @@
+export {getNavByUrl} from './nav';
