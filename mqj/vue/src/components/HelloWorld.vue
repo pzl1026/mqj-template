@@ -85,6 +85,7 @@
         {{item.name}}
       </li>
     </ul>
+    <router-view/>
   </div>
 </template>
 

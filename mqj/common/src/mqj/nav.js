@@ -16,6 +16,10 @@ class Nav {
     this.currModuleMenu = this.navs[moduleName || 'goods'];
   }
 
+  // // 将路由转变为vue-router所需要的结构
+  // handleNavs
+  
+
   // 获取当前某个菜单的属性
   getCurrentMenuProps() {
     this.setTitle();

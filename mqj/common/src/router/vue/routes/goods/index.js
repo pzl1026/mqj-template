@@ -1,14 +1,9 @@
-const route = [
-  {
-    path: '/list',
-    name: 'HelloWorld',
-    component: loadComponent('app3', './hello')
-  },
-  {
-    path: '/test',
-    name: 'test',
-    component: loadComponent('app3', './pages', 'Test')
-  }
+import goods from './goods';
+import props from './props';
+
+const routes = [
+  goods,
+  props
 ];
 
-export default nav;
+export default routes;

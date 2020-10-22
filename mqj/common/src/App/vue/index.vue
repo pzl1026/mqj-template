@@ -8,31 +8,17 @@
         theme="dark"
         mode="horizontal"
         :style="{ lineHeight: '64px' }"
-        :inline-collapsed="collapsed"
         v-model="current"
       >
-        <a-sub-menu key="1">
-          <span slot="title" class="submenu-title-wrapper" @click="toTest"><a-icon type="appstore" /><span>toTest</span></span>
-        </a-sub-menu>
-        <a-sub-menu key="2">
-          <span slot="title" class="submenu-title-wrapper" @click="toHello"><a-icon type="appstore" /><span>toHello</span></span>
-        </a-sub-menu >
-        <a-sub-menu key="3">
-          <span slot="title" class="submenu-title-wrapper"><a-icon type="appstore" /><span>Navigation Two</span></span>
-          <a-menu-item key="5">
-            Option 5
+        <a-sub-menu v-for="item in menu" :key="item.path">
+          <span slot="title" class="submenu-title-wrapper">
+            <a-icon type="appstore" />
+            <span>{{item.name}}</span>
+          </span>
+          <a-menu-item :key="child.path" v-for="child in item.children" @click="toPush(child, item.path)">
+            <a-icon type="appstore" />
+            <span>{{child.name}}</span>
           </a-menu-item>
-          <a-menu-item key="6">
-            Option 6
-          </a-menu-item>
-          <a-sub-menu key="sub3" title="Submenu">
-            <a-menu-item key="7">
-              Option 7
-            </a-menu-item>
-            <a-menu-item key="8">
-              Option 8
-            </a-menu-item>
-          </a-sub-menu>
         </a-sub-menu>
       </a-menu>
     </a-layout-header>
@@ -61,7 +47,11 @@ export default {
         current: ['1'],
         openKeys: ['sub1'],
         collapsed: false,
+        menu: this.$mqj.naver.currModuleMenu
       };
+    },
+    created() {
+      console.log(this.$mqj.naver.currModuleMenu, 'this')
     },
     methods: {
       toHello() {
@@ -72,6 +62,11 @@ export default {
       toTest() {
         this.$router.push({
           path: '/test',
+        });
+      },
+      toPush (nav, parentPath) {
+        this.$router.push({
+          path: nav.path,
         });
       }
     },
