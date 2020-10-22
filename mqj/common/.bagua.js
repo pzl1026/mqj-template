@@ -54,8 +54,12 @@ module.exports = {
   prod: {
     st1: {
       remotes: {
-        app3: 'vue@http://localhost:3001/vue/remoteEntry.js',
-        app2: 'react@http://localhost:3001/react/remoteEntry.js',
+        app3: 'app3@http://localhost:3001/app3/remoteEntry.js',
+        // app2: 'react@http://localhost:3001/react/remoteEntry.js',
+      },
+      exposes: {
+        './C1': path.resolve(__dirname, 'src/widgets/test/index'),
+        './C2': path.resolve(__dirname, 'src/widgets/test2/index.vue'),
       },
       output: {
         publicPath: '//localhost:3001/',

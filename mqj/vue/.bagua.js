@@ -52,9 +52,17 @@ module.exports = {
     st1: {
       exposes: {
         './Widget': path.resolve(__dirname, 'src/index'),
+        './app': path.resolve(__dirname, 'src/App.vue'),
+        './hello': path.resolve(__dirname, 'src/components/HelloWorld.vue'),
+        './test': path.resolve(__dirname, 'src/test'),
+        './pages': path.resolve(__dirname, 'src/pages'),
+      },
+      remotes: {
+        // app2: 'app2@http://localhost:3002/remoteEntry.js',
+        common: 'common@http://localhost:3001/remoteEntry.js'
       },
       output: {
-        publicPath: '//localhost:3001/vue/',
+        publicPath: '//localhost:3001/app3/',
       },
     },
     default: {
