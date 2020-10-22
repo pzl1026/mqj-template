@@ -12,7 +12,9 @@ module.exports = {
       exposes: {
         './Widget': path.resolve(__dirname, 'src/index'),
         './app': path.resolve(__dirname, 'src/App.vue'),
+        './hello': path.resolve(__dirname, 'src/components/HelloWorld.vue'),
         './test': path.resolve(__dirname, 'src/test'),
+        './pages': path.resolve(__dirname, 'src/pages'),
       },
       remotes: {
         // app2: 'app2@http://localhost:3002/remoteEntry.js',

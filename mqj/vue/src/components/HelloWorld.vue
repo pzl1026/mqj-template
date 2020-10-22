@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
+    <h2 @click="toLink">toTest</h2>
     <ul>
       <li>
         <a
@@ -102,6 +102,13 @@ export default {
         Api.getData().then(res => {
           console.log(res, 'res')
         });
+    },
+    methods: {
+      toLink() {
+        this.$router.push({
+          path: '/test',
+        });
+      }
     }
 };
 </script>
