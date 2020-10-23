@@ -64,12 +64,14 @@ export default {
         collapsed: false,
         breadcrumb:[],
         mqj: this.$mqj,
+        naver: this.$mqj.naver,
         menu: this.$mqj.naver.currModuleMenu
       };
     },
     watch: {
       '$route' (to, from) {
-        this.breadcrumb = this.mqj.naver.setBreadcrumb();
+        this.breadcrumb = this.naver.setBreadcrumb();
+        this.naver.saveStore(to);
       }
     },
     created() {
