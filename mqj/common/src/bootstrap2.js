@@ -6,12 +6,14 @@ import 'ant-design-vue/dist/antd.css';
 import {install} from 'ant-design-vue';
 
 install(Vue);
-// import("app3/app")
-
+// router.beforeEach((to, from, next) => {
+//   console.log(to, from, 'to, from')
+//   // if (to.name !== 'Login' && !isAuthenticated) next({ name: 'Login' })
+//   // else next()
+// })
 new Vue({
   el: '#root',
   router,
-  // components: { App: loadComponent("app3", './app') },
   components: { App },
   template: '<App/>',
 });

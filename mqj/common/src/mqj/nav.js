@@ -5,6 +5,7 @@ class Nav {
     this.navs = navs;
     this.currModuleMenu = null;
     this.menuRouter = [];
+    this.breadcrumb = [];
     this.getModuleByUrl();
     this.getCurrentMenuProps();
   }
@@ -42,14 +43,34 @@ class Nav {
     let currMenu = window.location.href.match(exp)[0];
   }
 
-  findMenuByPath() {
-    
+  // breadcrumb
+  setBreadcrumb () {
+    let exp = /(?<=#)(.*)/;
+    let path = window.location.href.match(exp)[0];
+    let paths = path.split('/').filter(n => n);
+    let bPaths = this.getBreadPaths(paths);
+    this.breadcrumb = this.menuRouter.filter(route => bPaths.includes(route.path));
+    return this.breadcrumb;
+  }
+
+  getBreadPaths (paths) {
+    let count = 1;
+    let p = [];
+    if (paths.length == 0) return;
+    while(count <= paths.length) {
+      console.log(22222)
+      let pathArr = paths.slice(0, count);
+      p.push('/' + pathArr.join('/'));
+      count++;
+    }
+    return p;
   }
 
   // 设置页面title
   setTitle() {
 
   }
+
 }
 
 export default Nav;

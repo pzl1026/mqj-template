@@ -24,13 +24,13 @@
     </a-layout-header>
     <a-layout-content class="layout-content">
       <a-breadcrumb :style="{ margin: '16px 0' }">
-        <a-breadcrumb-item>Home</a-breadcrumb-item>
-        <a-breadcrumb-item>List</a-breadcrumb-item>
-        <a-breadcrumb-item>App</a-breadcrumb-item>
+        <a-breadcrumb-item v-for="bread in breadcrumb" :key="bread.path">
+          <router-link :to="bread.path">{{bread.name}}</router-link>
+        </a-breadcrumb-item>
       </a-breadcrumb>
       <div class="layout-content-body">
-        <h2 @click="toTest">toTest</h2>
-        <h2 @click="toHello">toHello</h2>
+        <!-- <h2 @click="toTest">toTest</h2>
+        <h2 @click="toHello">toHello</h2> -->
         <router-view/>
       </div>
     </a-layout-content>
@@ -47,23 +47,35 @@ export default {
         current: ['1'],
         openKeys: ['sub1'],
         collapsed: false,
+        breadcrumb:[],
+        mqj: this.$mqj,
         menu: this.$mqj.naver.currModuleMenu
       };
+    },
+    watch: {
+      '$route' (to, from) {
+        this.breadcrumb = this.mqj.naver.setBreadcrumb();
+      }
     },
     created() {
       console.log(this.$mqj.naver.currModuleMenu, 'this')
     },
+
+    updated: function () {
+    //  this.breadcrumb = this.mqj.naver.setBreadcrumb();
+    },
+    
     methods: {
-      toHello() {
-        this.$router.push({
-          path: '/list',
-        });
-      },
-      toTest() {
-        this.$router.push({
-          path: '/test',
-        });
-      },
+      // toHello() {
+      //   this.$router.push({
+      //     path: '/list',
+      //   });
+      // },
+      // toTest() {
+      //   this.$router.push({
+      //     path: '/test',
+      //   });
+      // },
       toPush (nav, parentPath) {
         this.$router.push({
           path: nav.path,
