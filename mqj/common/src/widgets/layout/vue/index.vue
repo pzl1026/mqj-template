@@ -35,14 +35,14 @@
               最近访问 <a-icon type="down" />
             </a>
             <a-menu slot="overlay">
-              <a-menu-item v-for="bread in breadcrumb" :key="bread.path">
-                <router-link :to="bread.path">{{bread.name}}</router-link>
+              <a-menu-item v-for="link in recent" :key="link.path">
+                <!-- <router-link :to="link.path">{{bread.name}}</router-link> -->
+                <a @click="toRecent(link)">{{link.title}}</a>
               </a-menu-item>
             </a-menu>
           </a-dropdown>
         </div>
       </div>
-    
       <div class="layout-content-body">
         <!-- <h2 @click="toTest">toTest</h2>
         <h2 @click="toHello">toHello</h2> -->
@@ -63,6 +63,7 @@ export default {
         openKeys: ['sub1'],
         collapsed: false,
         breadcrumb:[],
+        recent: [],
         mqj: this.$mqj,
         naver: this.$mqj.naver,
         menu: this.$mqj.naver.currModuleMenu
@@ -70,8 +71,8 @@ export default {
     },
     watch: {
       '$route' (to, from) {
-        this.breadcrumb = this.naver.setBreadcrumb();
-        this.naver.saveStore(to);
+        this.breadcrumb = this.naver.setBreadcrumb(to);
+        this.recent = this.naver.saveStore(to);
       }
     },
     created() {
@@ -96,6 +97,15 @@ export default {
       toPush (nav, parentPath) {
         this.$router.push({
           path: nav.path,
+        });
+      },
+
+      toRecent (link) {
+        this.naver.isCurrModule(link)
+        .then(res => {
+          this.$router.push(res);
+        }, res => {
+          window.location.href = res;
         });
       }
     },

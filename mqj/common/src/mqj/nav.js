@@ -7,6 +7,8 @@ class Nav {
     this.menuRouter = [];
     this.breadcrumb = [];
     this.currModule = '';
+    this.recentPaths = [];  //最近访问的
+    this.activeRouter= null;  //当前router对象
     this.getModuleByUrl();
     this.getCurrentMenuProps();
   }
@@ -46,12 +48,25 @@ class Nav {
   }
 
   // breadcrumb
-  setBreadcrumb () {
+  setBreadcrumb (to) {
     let exp = /(?<=#)(.*)/;
     let path = window.location.href.match(exp)[0];
     let paths = path.split('/').filter(n => n);
     let bPaths = this.getBreadPaths(paths);
-    this.breadcrumb = this.menuRouter.filter(route => bPaths.includes(route.path));
+    console.log(bPaths, 'bPaths')
+    this.breadcrumb = this.menuRouter.filter(route => {
+      let testCount = 0;
+      // 处理路由上类似/:id的情况
+      for(let v of bPaths) {
+        let pathExp = new RegExp(v);
+
+        if (pathExp.test(route.path)) {
+          testCount++;
+        }
+      }
+
+      return testCount > 0;
+    });
     this.setTitle();
     return this.breadcrumb;
   }
@@ -76,19 +91,54 @@ class Nav {
   // 存储最近访问路径
   saveStore(to) {
     const MAX_RECENT_NUM = 5;
-    console.log(to,window.location, 'toto')
-    let isset = this.menuRouter.find(n => n.path == to.fullPath);
+    const RECENT_LOCAL = '_mqj_recent';
+    let allRecent = localStorage.getItem(RECENT_LOCAL);
+    allRecent = allRecent ? JSON.parse(allRecent) : [];
+    let isset = this.menuRouter.find(n => {
+      return n.path == to.matched[0].path;
+    });
+
     if (isset) {
-      let recentStore = {
+      let recent = {
         name: isset.name,
+        title: this.breadcrumb.map(m => m.name).join(' / '),
         path: isset.path,
+        realPath: to.path,
         module: isset.module,
-        fullPath: window.location.pathname + window.location.hash
+        updateTime: new Date().valueOf(),
+        href: window.location.href,
+        query: to.query,
+        params: to.params
       };
-      console.log(recentStore, 'recentStore')
+      if (!allRecent.find(n => n.path == isset.path)) {
+        allRecent.push(recent);
+      }
     }
-   
+
+    allRecent = allRecent.sort((a,b) => a.updateTime - b.updateTime).slice(0, MAX_RECENT_NUM);
+    localStorage.setItem(RECENT_LOCAL,JSON.stringify(allRecent));
+    this.recentPaths = allRecent;
+    return allRecent;
   }
+
+  // 判断是否是当前module展示
+  isCurrModule(recentLink) {
+    return new Promise((resolve, reject) => {
+      console.log(recentLink.module, this.currModule, 'module');
+      if (recentLink.module == this.currModule) {
+        let path = {
+          path: recentLink.realPath,
+          query: recentLink.query
+        }
+        resolve(path);
+      } else {
+        console.log(recentLink.href, 'recentLink.href')
+        reject(recentLink.href);
+      }
+    });
+  }
+
+  // 判断是否是当前module展示的同时代入了某些参数
 
 }
 
