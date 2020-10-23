@@ -23,11 +23,26 @@
       </a-menu>
     </a-layout-header>
     <a-layout-content class="layout-content">
-      <a-breadcrumb :style="{ margin: '16px 0' }">
-        <a-breadcrumb-item v-for="bread in breadcrumb" :key="bread.path">
-          <router-link :to="bread.path">{{bread.name}}</router-link>
-        </a-breadcrumb-item>
-      </a-breadcrumb>
+      <div class="sec-menu">
+        <a-breadcrumb :style="{ margin: '16px 0'}" class="sec-menu-left">
+          <a-breadcrumb-item v-for="bread in breadcrumb" :key="bread.path">
+            <router-link :to="bread.path">{{bread.name}}</router-link>
+          </a-breadcrumb-item>
+        </a-breadcrumb>
+        <div class="sec-menu-right">
+          <a-dropdown placement="bottomRight">
+            <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+              最近访问 <a-icon type="down" />
+            </a>
+            <a-menu slot="overlay">
+              <a-menu-item v-for="bread in breadcrumb" :key="bread.path">
+                <router-link :to="bread.path">{{bread.name}}</router-link>
+              </a-menu-item>
+            </a-menu>
+          </a-dropdown>
+        </div>
+      </div>
+    
       <div class="layout-content-body">
         <!-- <h2 @click="toTest">toTest</h2>
         <h2 @click="toHello">toHello</h2> -->
@@ -111,5 +126,17 @@ export default {
   background: #fff;
   padding: 24px;
   min-height: 380px;
+}
+.sec-menu{
+  display: flex;
+}
+.sec-menu-left{
+  flex: 1;
+}
+.sec-menu-right{
+  display: flex;
+  margin: 16px 0;
+  justify-content: flex-end;
+  width: 100px;
 }
 </style>
