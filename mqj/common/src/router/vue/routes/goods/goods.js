@@ -9,6 +9,13 @@ export default {
       path: '/list',
       name: '列表',
       component: loadComponent('app3', './pages', 'GoodsList'),
+      children: [
+        {
+          path: '/info',
+          name: '商品详情',
+          component: loadComponent('app3', './pages', 'GoodsInfo'),
+        }, 
+      ]
     }, 
   ]
 }

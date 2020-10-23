@@ -99,23 +99,30 @@ class Nav {
     });
 
     if (isset) {
+      let updateTime = new Date().valueOf();
       let recent = {
         name: isset.name,
         title: this.breadcrumb.map(m => m.name).join(' / '),
         path: isset.path,
         realPath: to.path,
         module: isset.module,
-        updateTime: new Date().valueOf(),
+        updateTime,
         href: window.location.href,
         query: to.query,
         params: to.params
       };
       if (!allRecent.find(n => n.path == isset.path)) {
         allRecent.push(recent);
+      } else {
+        allRecent.forEach(item => {
+          if (item.path == recent.path) {
+            item.updateTime = updateTime;
+          }
+        })
       }
     }
 
-    allRecent = allRecent.sort((a,b) => a.updateTime - b.updateTime).slice(0, MAX_RECENT_NUM);
+    allRecent = allRecent.sort((a,b) => b.updateTime - a.updateTime).slice(0, MAX_RECENT_NUM);
     localStorage.setItem(RECENT_LOCAL,JSON.stringify(allRecent));
     this.recentPaths = allRecent;
     return allRecent;
