@@ -13,32 +13,34 @@ const originalPush = Router.prototype.push
   Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
-console.log(Vue.prototype.$mqj.naver.currModuleMenu,'.naver.currModuleMenu')
-export default new Router({
-  routes: [
-    // {
-    //   path: '/list',
-    //   name: 'HelloWorld',
-    //   component: loadComponent('app3', './hello')
-    // },
-    // {
-    //   path: '/goods/list',
-    //   name: 'test',
-    //   component: loadComponent('app3', './pages', 'GoodsList')
-    // }
+const naver = Vue.prototype.$mqj.naver;
 
-    {
-      path: '/goods',
-      // name: '商品管理',
-      component: loadComponent('app3', './hello'),
-      children: [
-        {
-          path: 'list',
-          // name: '列表',
-          component: loadComponent('app3', './pages', 'GoodsList'),
-        }, 
-      ]
-    }
-  ]
+export default new Router({
+  routes: naver.menuRouter,
+  // routes: [
+  //   {
+  //     path: '/list',
+  //     name: 'HelloWorld',
+  //     component: loadComponent('app3', './hello')
+  //   },
+  //   {
+  //     path: '/goods/list',
+  //     name: 'test',
+  //     component: loadComponent('app3', './pages', 'GoodsList')
+  //   }
+
+  //   // {
+  //   //   path: '/goods',
+  //   //   // name: '商品管理',
+  //   //   component: loadComponent('app3', './hello'),
+  //   //   children: [
+  //   //     {
+  //   //       path: 'list',
+  //   //       // name: '列表',
+  //   //       component: loadComponent('app3', './pages', 'GoodsList'),
+  //   //     }, 
+  //   //   ]
+  //   // }
+  // ]
 });
 

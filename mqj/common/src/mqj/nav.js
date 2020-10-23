@@ -4,6 +4,7 @@ class Nav {
   constructor(navs) {
     this.navs = navs;
     this.currModuleMenu = null;
+    this.menuRouter = [];
     this.getModuleByUrl();
     this.getCurrentMenuProps();
   }
@@ -14,11 +15,25 @@ class Nav {
     let exp = /(?<=(?:http|https)\:\/\/(?:.*)\/)(.*)(?=#)/;
     let moduleName = window.location.href.match(exp)[0];
     this.currModuleMenu = this.navs[moduleName || 'goods'];
+    this.handleRouterFlat(this.currModuleMenu);
   }
 
-  // // 将路由转变为vue-router所需要的结构
-  // handleNavs
-  
+  // 将路由转变为vue-router所需要的结构,设置为一级path
+  handleRouterFlat(menu, parentPath = '') {
+    menu.forEach(item => {
+      item.path = parentPath + item.path;
+      let o = {
+       ...item
+      }
+      delete o.children;
+      this.menuRouter.push(o);
+
+      if (item.children){
+        this.handleRouterFlat(item.children, item.path);
+        // delete item.children;
+      }
+    })
+  }
 
   // 获取当前某个菜单的属性
   getCurrentMenuProps() {
