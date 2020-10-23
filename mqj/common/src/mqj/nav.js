@@ -19,22 +19,25 @@ class Nav {
     let exp = /(?<=(?:http|https)\:\/\/(?:.*)\/)(.*)(?=#)/;
     let moduleName = window.location.href.match(exp)[0];
     this.currModuleMenu = this.navs[moduleName || 'goods'];
+    console.log(this.currModuleMenu, 'this.currModuleMenu')
     this.currModule = moduleName;
     this.handleRouterFlat(this.currModuleMenu, moduleName);
   }
 
   // 将路由转变为vue-router所需要的结构,设置为一级path
   handleRouterFlat(menu, moduleName, parentPath = '') {
+    console.log(parentPath, 'parentPath')
     menu.forEach(item => {
-      item.path = parentPath + item.path;
       let o = {
        ...item,
        module: moduleName,
+       originPath: item.path
       }
+      item.path = o.path = parentPath + item.path;
       delete o.children;
       this.menuRouter.push(o);
       if (item.children){
-        this.handleRouterFlat(item.children, moduleName, item.path);
+        this.handleRouterFlat(item.children, moduleName, o.path);
         // delete item.children;
       }
     })
@@ -52,21 +55,20 @@ class Nav {
     let exp = /(?<=#)(.*)/;
     let path = window.location.href.match(exp)[0];
     let paths = path.split('/').filter(n => n);
-    let bPaths = this.getBreadPaths(paths);
-    console.log(bPaths, 'bPaths')
-    this.breadcrumb = this.menuRouter.filter(route => {
-      let testCount = 0;
-      // 处理路由上类似/:id的情况
-      for(let v of bPaths) {
-        let pathExp = new RegExp(v);
-
-        if (pathExp.test(route.path)) {
-          testCount++;
-        }
+    // let bPaths = this.getBreadPaths(paths);
+    let breadcrumb = [];
+    paths.forEach(item => {
+      let pathExp = new RegExp('/' + item);
+      
+      let isset = this.menuRouter.find(n => {
+        // 不同管理里面可能有相同的path，如都有'/list'这样的路径，必须要确定哪个管理下的
+       return pathExp.test(n.originPath) && paths[0] == n.path.substr(1,paths[0].length)
+      });
+      if (isset){
+        breadcrumb.push(isset);
       }
-
-      return testCount > 0;
     });
+    this.breadcrumb = breadcrumb;
     this.setTitle();
     return this.breadcrumb;
   }
@@ -85,7 +87,8 @@ class Nav {
 
   // 设置页面title
   setTitle() {
-
+    // this.menuRouter.find(m => m.name == this.module);
+    
   }
 
   // 存储最近访问路径
@@ -111,14 +114,18 @@ class Nav {
         query: to.query,
         params: to.params
       };
-      if (!allRecent.find(n => n.path == isset.path)) {
+      if (isset.cacheMore) {
         allRecent.push(recent);
       } else {
-        allRecent.forEach(item => {
-          if (item.path == recent.path) {
-            item.updateTime = updateTime;
-          }
-        })
+        if (!allRecent.find(n => n.path == isset.path)) {
+          allRecent.push(recent);
+        } else {
+          allRecent.forEach(item => {
+            if (item.path == recent.path) {
+              item.updateTime = updateTime;
+            }
+          })
+        }
       }
     }
 
@@ -131,7 +138,6 @@ class Nav {
   // 判断是否是当前module展示
   isCurrModule(recentLink) {
     return new Promise((resolve, reject) => {
-      console.log(recentLink.module, this.currModule, 'module');
       if (recentLink.module == this.currModule) {
         let path = {
           path: recentLink.realPath,
@@ -139,13 +145,10 @@ class Nav {
         }
         resolve(path);
       } else {
-        console.log(recentLink.href, 'recentLink.href')
         reject(recentLink.href);
       }
     });
   }
-
-  // 判断是否是当前module展示的同时代入了某些参数
 
 }
 

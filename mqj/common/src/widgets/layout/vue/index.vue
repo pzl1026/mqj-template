@@ -35,9 +35,14 @@
               最近访问 <a-icon type="down" />
             </a>
             <a-menu slot="overlay">
-              <a-menu-item v-for="link in recent" :key="link.path">
+              <a-menu-item v-for="link in recent" :key="link.updateTime">
                 <!-- <router-link :to="link.path">{{bread.name}}</router-link> -->
-                <a @click="toRecent(link)">{{link.title}}</a>
+                <!-- <a @click="toRecent(link)"> -->
+                <div class="recent-item" @click="toRecent(link)">
+                  {{link.title}}<br/>
+                  {{link.href}}
+                </div>
+                <!-- </a> -->
               </a-menu-item>
             </a-menu>
           </a-dropdown>
@@ -150,5 +155,11 @@ export default {
   margin: 16px 0;
   justify-content: flex-end;
   width: 100px;
+}
+
+.recent-item{
+  max-width: 300px;
+  white-space:normal;
+  word-break:break-all;
 }
 </style>

@@ -13,6 +13,7 @@ export default {
         {
           path: '/info',
           name: '商品详情',
+          cacheMore: true,
           component: loadComponent('app3', './pages', 'GoodsInfo'),
         }, 
       ]
