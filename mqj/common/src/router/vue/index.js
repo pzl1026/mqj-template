@@ -5,6 +5,7 @@ import mqjInstall from '@/mqj/install'
 
 Vue.use(Router);
 Vue.use(mqjInstall);
+
 // 这里有个坑，需要先import再使用loadComponent
 import('./routerComponents');
 
@@ -13,9 +14,12 @@ const originalPush = Router.prototype.push
   Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
+
+
+
 const naver = Vue.prototype.$mqj.naver;
 
-export default new Router({
+let R = new Router({
   routes: naver.menuRouter,
   // routes: [
   //   {
@@ -43,4 +47,8 @@ export default new Router({
   //   // }
   // ]
 });
+
+
+
+export default R;
 

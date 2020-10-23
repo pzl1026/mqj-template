@@ -2,11 +2,11 @@
 
 class Nav {
   constructor(navs) {
-    this.navs = navs;
-    this.currModuleMenu = null;
-    this.menuRouter = [];
-    this.breadcrumb = [];
-    this.currModule = '';
+    this.navs = navs;  // 所配置的所有路由
+    this.currModuleMenu = null; //当前模块的菜单
+    this.menuRouter = []; //当前模块的路由
+    this.breadcrumb = []; //当前页面的面包屑
+    this.currModule = '';  // 当前模块的名称，如‘goods’
     this.recentPaths = [];  //最近访问的
     this.activeRouter= null;  //当前router对象
     this.getModuleByUrl();
@@ -19,7 +19,6 @@ class Nav {
     let exp = /(?<=(?:http|https)\:\/\/(?:.*)\/)(.*)(?=#)/;
     let moduleName = window.location.href.match(exp)[0];
     this.currModuleMenu = this.navs[moduleName || 'goods'];
-    console.log(this.currModuleMenu, 'this.currModuleMenu')
     this.currModule = moduleName;
     this.handleRouterFlat(this.currModuleMenu, moduleName);
   }
