@@ -16,7 +16,7 @@ module.exports = {
       port: '3001',
       nomocker: false,
       remotes: {
-        app3: 'app3@http://localhost:3003/remoteEntry.js',
+        goods: 'goods@http://localhost:3003/remoteEntry.js',
         // app2: 'app2@http://localhost:3002/remoteEntry.js',
       },
       exposes: {
@@ -54,12 +54,12 @@ module.exports = {
   prod: {
     st1: {
       remotes: {
-        app3: 'app3@http://localhost:3001/app3/remoteEntry.js',
-        // app2: 'react@http://localhost:3001/react/remoteEntry.js',
+        goods: 'goods@http://localhost:3003/remoteEntry.js',
+        // app2: 'app2@http://localhost:3002/remoteEntry.js',
       },
       exposes: {
-        './C1': path.resolve(__dirname, 'src/widgets/test/index'),
-        './C2': path.resolve(__dirname, 'src/widgets/test2/index.vue'),
+        './util': path.resolve(__dirname, 'src/util'),
+        './components': path.resolve(__dirname, 'src/components'),
       },
       output: {
         publicPath: '//localhost:3001/',

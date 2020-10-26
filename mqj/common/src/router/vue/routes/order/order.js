@@ -8,7 +8,7 @@ export default {
     {
       path: '/list',
       name: '列表',
-      component: loadComponent('app3', './pages', 'OrderList'),
+      component: loadComponent('goods', './pages', 'OrderList'),
     }, 
   ]
 }

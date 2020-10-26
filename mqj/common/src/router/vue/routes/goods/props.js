@@ -8,7 +8,7 @@ export default {
     {
       path: '/list',
       name: '销售属性',
-      component: loadComponent('app3', './pages', 'PropsList'),
+      component: loadComponent('goods', './pages', 'PropsList'),
     }, 
   ]
 }

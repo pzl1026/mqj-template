@@ -1,9 +1,9 @@
 const path = require('path');
 
 module.exports = {
-  name: 'app3',
+  name: 'goods',
   isTop: false,
-  shared: [{ vue: { singleton: true } }],
+  shared: [{ goods: { singleton: true } }],
   // library: { type: 'var', name: 'vue' },   //如果需要remotes，就应该将该属性屏蔽
   dev: {
     st1: {
@@ -48,14 +48,13 @@ module.exports = {
     st1: {
       exposes: {
         './pages': path.resolve(__dirname, 'src/pages'),
-        './components': path.resolve(__dirname, 'src/components'),
       },
       remotes: {
         // app2: 'app2@http://localhost:3002/remoteEntry.js',
         common: 'common@http://localhost:3001/remoteEntry.js'
       },
       output: {
-        publicPath: '//localhost:3001/app3/',
+        publicPath: '//localhost:3003/goods/',
       },
     },
     default: {

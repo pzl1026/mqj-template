@@ -8,13 +8,13 @@ export default {
     {
       path: '/list',
       name: '列表',
-      component: loadComponent('app3', './pages', 'GoodsList'),
+      component: loadComponent('goods', './pages', 'GoodsList'),
       children: [
         {
           path: '/info/:id',
           name: '商品详情',
           cacheMore: true,
-          component: loadComponent('app3', './pages', 'GoodsInfo'),
+          component: loadComponent('goods', './pages', 'GoodsInfo'),
         }, 
       ]
     }, 

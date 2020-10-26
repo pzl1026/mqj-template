@@ -157,7 +157,7 @@ class Nav {
 
       const [,path] = location.hash.split('#');
       if (!menuRouter.find(n => n.path == path)) {
-        let cr = menuRouter.find(n => !n.component);
+        let cr = menuRouter.find(n => n.component);
         R.push({
           path: cr.path
         });

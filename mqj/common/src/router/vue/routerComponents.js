@@ -1,1 +1,1 @@
-import('app3/pages');
+import('goods/pages');
