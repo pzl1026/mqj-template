@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <C2 />
-    <!-- <router-view/> -->
+    <!-- <C2 /> -->
+    <Test />
   </div>
 </template>
 
 <script>
-
+import Test from '@/components/Test';
 function loadComponent(scope, module) {
   return async () => {
     // Initializes the share scope. This fills it with known provided modules from this build and all remotes
@@ -23,7 +23,10 @@ function loadComponent(scope, module) {
 }
 export default {
     name: 'App',
-    components: { C2: loadComponent("common", './C2') },
+    components: { 
+      // C2: loadComponent("common", './C2'), 
+      Test 
+    },
 };
 </script>
 

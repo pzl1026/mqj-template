@@ -22,6 +22,8 @@ module.exports = {
       exposes: {
         './C1': path.resolve(__dirname, 'src/widgets/test/index'),
         './C2': path.resolve(__dirname, 'src/widgets/test2/index.vue'),
+        './util': path.resolve(__dirname, 'src/util'),
+        './components': path.resolve(__dirname, 'src/components'),
       },
       devServer: {
         proxy: {

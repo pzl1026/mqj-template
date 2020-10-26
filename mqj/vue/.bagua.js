@@ -10,10 +10,6 @@ module.exports = {
       port: '3003',
       nomocker: false,
       exposes: {
-        './Widget': path.resolve(__dirname, 'src/index'),
-        './app': path.resolve(__dirname, 'src/App.vue'),
-        './hello': path.resolve(__dirname, 'src/components/HelloWorld.vue'),
-        './test': path.resolve(__dirname, 'src/test'),
         './pages': path.resolve(__dirname, 'src/pages'),
       },
       remotes: {
@@ -56,6 +52,7 @@ module.exports = {
         './hello': path.resolve(__dirname, 'src/components/HelloWorld.vue'),
         './test': path.resolve(__dirname, 'src/test'),
         './pages': path.resolve(__dirname, 'src/pages'),
+        './components': path.resolve(__dirname, 'src/components'),
       },
       remotes: {
         // app2: 'app2@http://localhost:3002/remoteEntry.js',
