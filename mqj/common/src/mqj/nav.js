@@ -1,4 +1,4 @@
-
+import {MAX_RECENT_NUM, RECENT_LOCAL} from './mqj.config';
 
 class Nav {
   constructor(navs) {
@@ -92,8 +92,6 @@ class Nav {
 
   // 存储最近访问路径
   saveStore(to) {
-    const MAX_RECENT_NUM = 5;
-    const RECENT_LOCAL = '_mqj_recent';
     let allRecent = localStorage.getItem(RECENT_LOCAL);
     allRecent = allRecent ? JSON.parse(allRecent) : [];
     let isset = this.menuRouter.find(n => {

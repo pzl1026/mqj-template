@@ -1,26 +1,45 @@
 <template>
   <a-layout id="app">
     <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
-      <div class="logo" />
-      <!--     :default-selected-keys="['3']"
-        :open-keys.sync="openKeys" -->
-      <a-menu
-        theme="dark"
-        mode="horizontal"
-        :style="{ lineHeight: '64px' }"
-        v-model="current"
-      >
-        <a-sub-menu v-for="item in menu" :key="item.path">
-          <span slot="title" class="submenu-title-wrapper">
-            <a-icon type="appstore" />
-            <span>{{item.name}}</span>
-          </span>
-          <a-menu-item :key="child.path" v-for="child in item.children" @click="toPush(child, item.path)">
-            <a-icon type="appstore" />
-            <span>{{child.name}}</span>
-          </a-menu-item>
-        </a-sub-menu>
-      </a-menu>
+      <a-row type="flex" justify="end">
+        <a-col :span="3">
+             <div class="logo" />
+        </a-col>
+        <a-col :span="20">
+          <a-menu
+            theme="dark"
+            mode="horizontal"
+            :style="{ lineHeight: '64px' }"
+            v-model="current"
+          >
+            <a-sub-menu v-for="item in menu" :key="item.path">
+              <span slot="title" class="submenu-title-wrapper">
+                <a-icon type="appstore" />
+                <span>{{item.name}}</span>
+              </span>
+              <a-menu-item :key="child.path" v-for="child in item.children" @click="toPush(child, item.path)">
+                <a-icon type="appstore" />
+                <span>{{child.name}}</span>
+              </a-menu-item>
+            </a-sub-menu>
+          </a-menu>
+        </a-col>
+        <a-col :span="1" >
+          <a-dropdown placement="bottomRight">
+            <div class="nav-admin">
+              <a-avatar :size="40" icon="user" />
+            </div>
+            <a-menu slot="overlay">
+              <a-menu-item>
+                <a href="javascript:;" @click="changeModuleShow(true)">所有模块</a>
+              </a-menu-item>
+              <a-menu-item>
+                <a href="javascript:;">退出登录</a>
+              </a-menu-item>
+            </a-menu>
+          </a-dropdown>
+        </a-col>
+      </a-row>
     </a-layout-header>
     <a-layout-content class="layout-content">
       <div class="sec-menu">
@@ -49,17 +68,32 @@
         </div>
       </div>
       <div class="layout-content-body">
-        <!-- <h2 @click="toTest">toTest</h2>
-        <h2 @click="toHello">toHello</h2> -->
-        <router-view/>
+        <transition name="slide-fade">
+          <router-view/>
+        </transition>
       </div>
     </a-layout-content>
+    <a-modal 
+    v-model="moduleShow" 
+    title="所有模块" 
+    @cancel="changeModuleShow(false)" 
+    :footer="null"
+    :width="1000">
+      <a-row :gutter="[16, 16]">
+        <a-col class="gutter-row" :span="4" v-for="m in MODULES" :key="m.name">
+          <div class="gutter-box">
+            <a-icon :type="m.icon" :style="{ fontSize: '40px' }"/>
+            <span>{{m.name}}</span>
+          </div>
+        </a-col>
+      </a-row>
+    </a-modal>
   </a-layout>
 </template>
 
 <script>
 import {loadComponent} from '@/util';
-
+import {MODULES} from '@/mqj/mqj.config';
 export default {
     name: 'App',
     data() {
@@ -71,7 +105,9 @@ export default {
         recent: [],
         mqj: this.$mqj,
         naver: this.$mqj.naver,
-        menu: this.$mqj.naver.currModuleMenu
+        menu: this.$mqj.naver.currModuleMenu,
+        moduleShow: false,
+        MODULES
       };
     },
     watch: {
@@ -89,16 +125,6 @@ export default {
     },
     
     methods: {
-      // toHello() {
-      //   this.$router.push({
-      //     path: '/list',
-      //   });
-      // },
-      // toTest() {
-      //   this.$router.push({
-      //     path: '/test',
-      //   });
-      // },
       toPush (nav, parentPath) {
         this.$router.push({
           path: nav.path,
@@ -112,6 +138,10 @@ export default {
         }, res => {
           window.location.href = res;
         });
+      },
+
+      changeModuleShow (show) {
+        this.moduleShow = show;
       }
     },
 };
@@ -161,5 +191,39 @@ export default {
   max-width: 300px;
   white-space:normal;
   word-break:break-all;
+}
+
+.nav-admin{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.slide-fade-enter-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-leave-active {
+  transition: all 0s;
+}
+.slide-fade-enter, .slide-fade-leave-to{
+  transform: translateY(10px);
+  opacity: 0;
+}
+.ant-modal-close-x{
+  display: flex!important;
+  justify-content: center;
+  align-items: center;
+  line-height: 56px!important;
+}
+.gutter-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.gutter-box span{
+  line-height: 30px;
 }
 </style>
