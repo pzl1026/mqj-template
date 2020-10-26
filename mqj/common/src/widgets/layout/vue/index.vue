@@ -69,7 +69,7 @@
       </div>
       <div class="layout-content-body">
         <transition name="slide-fade">
-          <router-view/>
+          <router-view :beforeEnter="beforeEnter"/>
         </transition>
       </div>
     </a-layout-content>
@@ -80,8 +80,8 @@
     :footer="null"
     :width="1000">
       <a-row :gutter="[16, 16]">
-        <a-col class="gutter-row" :span="4" v-for="m in MODULES" :key="m.name">
-          <div class="gutter-box">
+        <a-col class="gutter-row" :span="4" v-for="m in MODULES" :key="m.name" >
+          <div class="gutter-box" @click="toModule(m)">
             <a-icon :type="m.icon" :style="{ fontSize: '40px' }"/>
             <span>{{m.name}}</span>
           </div>
@@ -138,6 +138,14 @@ export default {
         }, res => {
           window.location.href = res;
         });
+      },
+
+      beforeEnter (to,from, next) {
+        cosnole.log(to,from, 'totoo')
+      },
+
+      toModule (m) {
+        location.href = m.path;
       },
 
       changeModuleShow (show) {

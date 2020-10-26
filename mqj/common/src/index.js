@@ -1,4 +1,3 @@
-// import("./bootstrap");
 if (!location.hash) {
   let recent = JSON.parse(localStorage.getItem('_mqj_recent'));
   if (recent) {

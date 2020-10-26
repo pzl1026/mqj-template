@@ -15,8 +15,6 @@ const originalPush = Router.prototype.push
   return originalPush.call(this, location).catch(err => err)
 }
 
-
-
 const naver = Vue.prototype.$mqj.naver;
 
 let R = new Router({
@@ -48,7 +46,7 @@ let R = new Router({
   // ]
 });
 
-
+naver.handleErrPath(R);
 
 export default R;
 

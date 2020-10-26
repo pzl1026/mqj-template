@@ -11,7 +11,7 @@ export default {
       component: loadComponent('app3', './pages', 'GoodsList'),
       children: [
         {
-          path: '/info',
+          path: '/info/:id',
           name: '商品详情',
           cacheMore: true,
           component: loadComponent('app3', './pages', 'GoodsInfo'),

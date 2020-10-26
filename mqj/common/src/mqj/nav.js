@@ -39,7 +39,9 @@ class Nav {
         this.handleRouterFlat(item.children, moduleName, o.path);
         // delete item.children;
       }
-    })
+    });
+
+    console.log(this.menuRouter, 'this.menuRouter')
   }
 
   // 获取当前某个菜单的属性
@@ -143,6 +145,32 @@ class Nav {
         resolve(path);
       } else {
         reject(recentLink.href);
+      }
+    });
+  }
+
+  // 针对没有搜索到相应模块或者相应的路径做处理
+  handleErrPath(R) {
+    R.afterEach((to, from) => {
+      /* 必须调用 `next` */
+      const menuRouter = this.menuRouter;
+
+      const [,path] = location.hash.split('#');
+      if (!menuRouter.find(n => n.path == path)) {
+        let cr = menuRouter.find(n => !n.component);
+        R.push({
+          path: cr.path
+        });
+      } else {
+        if (menuRouter.find(n => !n.component)) {
+          let childRouter = menuRouter.filter(m => m.component);
+          let cr = childRouter
+          .filter(n => n.path.indexOf(path) > -1 && n.path.indexOf(':') == -1)
+          .sort((a,b) => b.path.length - a.path.length)[0];
+          R.push({
+            path: cr.path
+          });
+        }
       }
     });
   }
