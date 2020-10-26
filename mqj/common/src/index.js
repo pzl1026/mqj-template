@@ -6,7 +6,7 @@ if (!location.hash) {
     window.location.href = '/goods#/goods/list';
   }
 } else {
-  import("./bootstrap2");
+  import("./bootstrap");
 }
  
 

@@ -47,10 +47,6 @@ module.exports = {
   prod: {
     st1: {
       exposes: {
-        './Widget': path.resolve(__dirname, 'src/index'),
-        './app': path.resolve(__dirname, 'src/App.vue'),
-        './hello': path.resolve(__dirname, 'src/components/HelloWorld.vue'),
-        './test': path.resolve(__dirname, 'src/test'),
         './pages': path.resolve(__dirname, 'src/pages'),
         './components': path.resolve(__dirname, 'src/components'),
       },
