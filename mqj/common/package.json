@@ -32,11 +32,6 @@
   "dependencies": {
     "ant-design-vue": "^1.6.5",
     "ant-design-vue-mqj": "git+https://github.com/pzl1026/antd-design-vue-mqj.git",
-    "antd": "^4.7.0",
-    "rc-queue-anim": "^1.8.5",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "react-draggable": "^4.4.3",
     "vue": "^2.6.12",
     "vue-router": "^3.4.7"
   }
