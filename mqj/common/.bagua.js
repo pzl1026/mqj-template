@@ -16,7 +16,7 @@ module.exports = {
       port: '3001',
       nomocker: false,
       remotes: {
-        goods: 'goods@http://localhost:3003/remoteEntry.js',
+        goods: 'goods@//localhost:3003/remoteEntry.js',
         // app2: 'app2@http://localhost:3002/remoteEntry.js',
       },
       exposes: {
@@ -54,7 +54,7 @@ module.exports = {
   prod: {
     st1: {
       remotes: {
-        goods: 'goods@http://localhost:3003/remoteEntry.js',
+        goods: 'goods@//localhost:3001/goods/remoteEntry.js',
         // app2: 'app2@http://localhost:3002/remoteEntry.js',
       },
       exposes: {

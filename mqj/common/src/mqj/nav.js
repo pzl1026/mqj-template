@@ -17,7 +17,7 @@ class Nav {
   // 从url判断获取nav
   getModuleByUrl() {
     let exp = /(?<=(?:http|https)\:\/\/(?:.*)\/)(.*)(?=#)/;
-    let moduleName = window.location.href.match(exp)[0];
+    let moduleName =  window.location.href.match(exp) && window.location.href.match(exp)[0];
     this.currModuleMenu = this.navs[moduleName || 'goods'];
     this.currModule = moduleName;
     this.handleRouterFlat(this.currModuleMenu, moduleName);

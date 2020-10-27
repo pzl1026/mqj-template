@@ -14,7 +14,7 @@ module.exports = {
       },
       remotes: {
         // app2: 'app2@http://localhost:3002/remoteEntry.js',
-        common: 'common@http://localhost:3001/remoteEntry.js'
+        common: 'common@//localhost:3001/remoteEntry.js'
       },
       devServer: {
         proxy: {
@@ -46,15 +46,15 @@ module.exports = {
   },
   prod: {
     st1: {
+      remotes: {
+        // app2: 'app2@http://localhost:3002/remoteEntry.js',
+        common: 'common@//localhost:3001/remoteEntry.js'
+      },
       exposes: {
         './pages': path.resolve(__dirname, 'src/pages'),
       },
-      remotes: {
-        // app2: 'app2@http://localhost:3002/remoteEntry.js',
-        common: 'common@http://localhost:3001/remoteEntry.js'
-      },
       output: {
-        publicPath: '//localhost:3003/goods/',
+        publicPath: '//localhost:3001/goods/',
       },
     },
     default: {
