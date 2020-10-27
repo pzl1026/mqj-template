@@ -28,14 +28,13 @@
   "scripts": {
     "start": "bagua-cli2 -d st1",
     "build": "bagua-cli2 -b st1",
-    "build2": "bagua-cli2 -b st1",
     "serve": "serve dist -p 3003",
-    "clean": "rm -rf dist",
-    "add": "npm i && npm fund"
+    "clean": "rm -rf dist"
   },
   "dependencies": {
     "axios": "^0.20.0",
     "vue": "^2.6.12",
-    "vue-router": "^3.4.3"
+    "ant-design-vue-mqj": "git+https://github.com/pzl1026/antd-design-vue-mqj.git",
+    "vue-router": "^3.4.7"
   }
 }

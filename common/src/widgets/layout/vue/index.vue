@@ -94,7 +94,7 @@
 <script>
 import {loadComponent} from '@/util';
 import {MODULES} from '@/mqj/mqj.config';
-
+console.log(2222222)
 export default {
     name: 'App',
     data() {

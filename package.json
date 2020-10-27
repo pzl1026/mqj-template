@@ -3,23 +3,13 @@
   "private": true,
   "scripts": {
     "start": "bagua-cli2 -s start",
-    "start2": "bagua-cli -s start2",
-    "start3": "lerna run --scope @mqj/* start",
-    "build2": "lerna run --scope @mqj/* build",
-    "build": "bagua-cli2 -p build2",
-    "serve2": "lerna run --scope @packages/* --parallel serve",
-    "serve": "serve dist -p 3001",
-    "clean": "lerna run --scope @packages/* --parallel clean",
-    "add": "bagua-cli -i"
+    "build": "bagua-cli2 -p build",
+    "serve": "serve dist -p 3001"
   },
   "devDependencies": {
-    "lerna": "3.22.1",
     "serve": "^11.3.2"
   },
   "workspaces": [
     "./*"
-  ],
-  "dependencies": {
-    "react-router": "^5.2.0"
-  }
+  ]
 }
