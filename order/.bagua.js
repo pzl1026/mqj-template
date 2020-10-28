@@ -1,13 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  name: 'goods',
+  name: 'order',
   isTop: false,
   shared: [{ vue: { singleton: true } }],
   // library: { type: 'var', name: 'vue' },   //如果需要remotes，就应该将该属性屏蔽
   dev: {
     st1: {
-      port: '3003',
+      port: '3002',
       nomocker: false,
       exposes: {
         './pages': path.resolve(__dirname, 'src/pages'),
@@ -25,11 +25,11 @@ module.exports = {
         },
       },
       output: {
-        publicPath: '//localhost:3003/',
+        publicPath: '//localhost:3002/',
       },
     },
     default: {
-      port: '3003',
+      port: '3002',
       nomocker: false,
       devServer: {
         proxy: {
@@ -40,7 +40,7 @@ module.exports = {
         },
       },
       output: {
-        publicPath: '//localhost:3003/',
+        publicPath: '//localhost:3002/',
       },
     },
   },

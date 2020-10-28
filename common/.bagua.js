@@ -17,6 +17,7 @@ module.exports = {
       nomocker: false,
       remotes: {
         goods: 'goods@//localhost:3003/remoteEntry.js',
+        order: 'order@//localhost:3002/remoteEntry.js',
         // app2: 'app2@http://localhost:3002/remoteEntry.js',
       },
       exposes: {
@@ -55,6 +56,7 @@ module.exports = {
     st1: {
       remotes: {
         goods: 'goods@//localhost:3001/goods/remoteEntry.js',
+        order: 'order@//localhost:3001/order/remoteEntry.js',
         // app2: 'app2@http://localhost:3002/remoteEntry.js',
       },
       exposes: {
