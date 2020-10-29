@@ -21,8 +21,8 @@
     "webpack": "^5.2.0"
   },
   "scripts": {
-    "start": "bagua-cli2 -d st1",
-    "build": "bagua-cli2 -b st1",
+    "start": "bagua-cli -d st1",
+    "build": "bagua-cli -b st1",
     "serve": "serve dist -p 3001",
     "clean": "rm -rf dist"
   },

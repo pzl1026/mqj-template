@@ -2,8 +2,8 @@
   "name": "mqj",
   "private": true,
   "scripts": {
-    "start": "bagua-cli2 -s start",
-    "build": "bagua-cli2 -p build",
+    "start": "bagua-cli -s start",
+    "build": "bagua-cli -p build",
     "serve": "serve dist -p 3001"
   },
   "devDependencies": {
