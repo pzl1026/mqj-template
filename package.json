@@ -7,6 +7,7 @@
     "serve": "serve dist -p 3001"
   },
   "devDependencies": {
+    "lerna": "^3.22.1",
     "serve": "^11.3.2"
   },
   "workspaces": [
