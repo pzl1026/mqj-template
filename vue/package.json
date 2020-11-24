@@ -34,7 +34,7 @@
   "dependencies": {
     "axios": "^0.20.0",
     "vue": "^2.6.12",
-    "ant-design-vue-mqj": "git+https://github.com/pzl1026/antd-design-vue-mqj.git",
+    "ant-design-vue": "^1.7.2",
     "vue-router": "^3.4.7"
   }
 }

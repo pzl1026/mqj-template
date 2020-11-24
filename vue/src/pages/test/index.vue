@@ -1,17 +1,5 @@
 <template>
   <div>
-    <span @click="toLink">toHello</span>
+    Test
   </div>
 </template>
-
-<script>
-export default {
-  methods: {
-    toLink() {
-      this.$router.push({
-        path: '/list',
-      });
-    }
-  }
-}
-</script>

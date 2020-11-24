@@ -1,19 +1,18 @@
 const path = require('path');
 
 module.exports = {
-  name: 'goods',
+  name: 'vue',
   isTop: false,
-  shared: [{ goods: { singleton: true } }],
+  // shared: [{ goods: { singleton: true } }],
   // library: { type: 'var', name: 'vue' },   //如果需要remotes，就应该将该属性屏蔽
   dev: {
     st1: {
-      port: '3003',
+      port: '8000',
       nomocker: false,
       exposes: {
         './pages': path.resolve(__dirname, 'src/pages'),
       },
       remotes: {
-        // app2: 'app2@http://localhost:3002/remoteEntry.js',
         common: 'common@//localhost:3001/remoteEntry.js'
       },
       devServer: {
@@ -25,11 +24,11 @@ module.exports = {
         },
       },
       output: {
-        publicPath: '//localhost:3003/',
+        publicPath: '//localhost:8000/',
       },
     },
     default: {
-      port: '3003',
+      port: '8000',
       nomocker: false,
       devServer: {
         proxy: {
@@ -40,26 +39,25 @@ module.exports = {
         },
       },
       output: {
-        publicPath: '//localhost:3003/',
+        publicPath: '//localhost:8000/',
       },
     },
   },
   prod: {
     st1: {
       remotes: {
-        // app2: 'app2@http://localhost:3002/remoteEntry.js',
         common: 'common@//localhost:3001/remoteEntry.js'
       },
       exposes: {
         './pages': path.resolve(__dirname, 'src/pages'),
       },
       output: {
-        publicPath: '//localhost:3001/goods/',
+        publicPath: '//localhost:8000/goods/',
       },
     },
     default: {
       output: {
-        publicPath: '//localhost:3003/',
+        publicPath: '//localhost:8000/',
       },
     },
   },
