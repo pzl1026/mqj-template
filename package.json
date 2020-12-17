@@ -4,7 +4,8 @@
   "scripts": {
     "start": "bagua-cli -s start",
     "build": "bagua-cli -p build",
-    "serve": "serve dist -p 3001"
+    "serve": "serve dist -p 3001",
+    "start:lerna": "lerna run --scope @mqj/* --parallel start"
   },
   "devDependencies": {
     "lerna": "^3.22.1",
