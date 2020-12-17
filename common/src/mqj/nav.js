@@ -25,7 +25,6 @@ class Nav {
 
   // 将路由转变为vue-router所需要的结构,设置为一级path
   handleRouterFlat(menu, moduleName, parentPath = '') {
-    console.log(parentPath, 'parentPath')
     menu.forEach(item => {
       let o = {
        ...item,
@@ -40,8 +39,7 @@ class Nav {
         // delete item.children;
       }
     });
-
-    console.log(this.menuRouter, 'this.menuRouter')
+    console.log(menu, 'menu')
   }
 
   // 获取当前某个菜单的属性
@@ -53,6 +51,7 @@ class Nav {
 
   // breadcrumb
   setBreadcrumb (to) {
+    console.log(to, 'toto')
     let exp = /(?<=#)(.*)/;
     let path = window.location.href.match(exp)[0];
     let paths = path.split('/').filter(n => n);

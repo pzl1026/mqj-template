@@ -7,8 +7,8 @@ import Nav from './nav'
 // console.log(navs, 'moduleMenu')
 
 export default {
-  install: function(Vue, options) {
-    Vue.prototype.$mqj = {
+  install: function(app, options) {
+    app.config.globalProperties.$mqj = {
       naver: new Nav(routes)
     }
   }

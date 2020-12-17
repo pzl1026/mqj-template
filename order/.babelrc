@@ -5,7 +5,7 @@
       {
         "modules": false,
         "targets": {
-          "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+          "browsers": ["> 1%", "last 2 versions", "not ie <= 11"]
         }
       }
     ]
@@ -15,5 +15,6 @@
     "transform-vue-jsx",
     "@babel/plugin-transform-runtime",
     "jsx-v-model"
+    // ["import", { "libraryName": "ant-design-vue", "libraryDirectory": "es", "style": true }]
   ]
 }

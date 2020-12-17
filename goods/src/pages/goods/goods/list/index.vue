@@ -6,9 +6,9 @@
 </template>
 
 <script>
-import('common/util').then(res => {
-  console.log(res, '这里可以引用common/util的模块');
-})
+// import('common/util').then(res => {
+//   console.log(res, '这里可以引用common/util的模块');
+// })
 import {loadComponent} from '@/util';
 export default {
    components: { 

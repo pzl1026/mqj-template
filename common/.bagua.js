@@ -4,11 +4,12 @@ module.exports = {
   name: 'common',
   isTop: true,
   shared: {
-    react: {
-      singleton: true, // only a single version of the shared module is allowed
-    },
-    'react-dom': { singleton: true },
+    // react: {
+    //   singleton: true, // only a single version of the shared module is allowed
+    // },
+    // 'react-dom': { singleton: true },
     vue: { singleton: true },
+    'vue-router': { singleton: true },
   },
   // library: { type: "var", name: "common" },
   dev: {

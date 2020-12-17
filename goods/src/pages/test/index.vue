@@ -8,9 +8,9 @@
 export default {
   methods: {
     toLink() {
-      this.$router.push({
-        path: '/list',
-      });
+      // this.$router.push({
+      //   path: '/list',
+      // });
     }
   }
 }

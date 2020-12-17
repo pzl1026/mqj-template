@@ -3,20 +3,22 @@
     <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
       <a-row type="flex" justify="end">
         <a-col :span="3">
-             <div class="logo" />
+          <div class="logo" />
         </a-col>
         <a-col :span="20">
           <a-menu
             theme="dark"
             mode="horizontal"
             :style="{ lineHeight: '64px' }"
-            v-model="current"
+            v-model:selectedKeys="current"
           >
             <a-sub-menu v-for="item in menu" :key="item.path">
-              <span slot="title" class="submenu-title-wrapper">
-                <a-icon type="appstore" />
-                <span>{{item.name}}</span>
-              </span>
+              <template #title>
+                <span class="submenu-title-wrapper">
+                  <a-icon type="appstore" />
+                  <span>{{item.name}}</span>
+                </span>
+              </template>
               <a-menu-item :key="child.path" v-for="child in item.children" @click="toPush(child, item.path)">
                 <a-icon type="appstore" />
                 <span>{{child.name}}</span>
@@ -27,16 +29,20 @@
         <a-col :span="1" >
           <a-dropdown placement="bottomRight">
             <div class="nav-admin">
-              <a-avatar :size="40" icon="user" />
+              <a-avatar :size="40">
+                 <template #icon><UserOutlined /></template>
+              </a-avatar>
             </div>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a href="javascript:;" @click="changeModuleShow(true)">所有模块</a>
-              </a-menu-item>
-              <a-menu-item>
-                <a href="javascript:;">退出登录</a>
-              </a-menu-item>
-            </a-menu>
+            <template #overlay>
+              <a-menu>
+                <!-- <a-menu-item>
+                  <a href="javascript:;" @click="changeModuleShow(true)">所有模块</a>
+                </a-menu-item> -->
+                <a-menu-item>
+                  <a href="javascript:;">退出登录</a>
+                </a-menu-item>
+              </a-menu>
+            </template>
           </a-dropdown>
         </a-col>
       </a-row>
@@ -53,49 +59,76 @@
             <a class="ant-dropdown-link" @click="e => e.preventDefault()">
               最近访问 <a-icon type="down" />
             </a>
-            <a-menu slot="overlay">
-              <a-menu-item v-for="link in recent" :key="link.updateTime">
-                <!-- <router-link :to="link.path">{{bread.name}}</router-link> -->
-                <!-- <a @click="toRecent(link)"> -->
-                <div class="recent-item" @click="toRecent(link)">
-                  {{link.title}}<br/>
-                  {{link.href}}
-                </div>
-                <!-- </a> -->
-              </a-menu-item>
-            </a-menu>
+            <template #overlay>
+              <a-menu slot="overlay">
+                <a-menu-item v-for="link in recent" :key="link.updateTime">
+                  <div class="recent-item" @click="toRecent(link)">
+                    {{link.title}}<br/>
+                    {{link.href}}
+                  </div>
+                </a-menu-item>
+              </a-menu>
+            </template>
           </a-dropdown>
         </div>
       </div>
       <div class="layout-content-body">
-        <transition name="slide-fade">
+        <!-- <transition name="slide-fade">
           <router-view :beforeEnter="beforeEnter"/>
-        </transition>
+        </transition> -->
+        <router-view v-slot="{ Component }">
+          <transition name="slide-fade">
+            <component :is="Component" />
+          </transition>
+        </router-view>
       </div>
     </a-layout-content>
-    <a-modal 
-    v-model="moduleShow" 
-    title="所有模块" 
-    @cancel="changeModuleShow(false)" 
-    :footer="null"
-    :width="1000">
-      <a-row :gutter="[16, 16]">
-        <a-col class="gutter-row" :span="4" v-for="m in MODULES" :key="m.name" >
-          <div class="gutter-box" @click="toModule(m)">
-            <a-icon :type="m.icon" :style="{ fontSize: '40px' }"/>
-            <span>{{m.name}}</span>
-          </div>
-        </a-col>
-      </a-row>
-    </a-modal>
+    <!-- <div>
+      <a-modal 
+      v-model:visible="moduleShow" 
+      title="所有模块" 
+      @cancel="changeModuleShow(false)" 
+      :footer="null"
+      :width="1000">
+      <div>asdasd</div>
+        <a-row :gutter="[16, 16]">
+          <a-col class="gutter-row" :span="4" v-for="m in MODULES" :key="m.name" >
+            <div class="gutter-box" @click="toModule(m)">
+              <a-icon :type="m.icon" :style="{ fontSize: '40px' }"/>
+              <span>{{m.name}}</span>
+            </div>
+          </a-col>
+        </a-row>
+      </a-modal>
+    </div> -->
   </a-layout>
 </template>
 
 <script>
 import {loadComponent} from '@/util';
 import {MODULES} from '@/mqj/mqj.config';
-console.log(2222222)
+import { Button, Layout, Row, Col, Icon, Modal, Breadcrumb, Dropdown, Avatar, Menu } from 'ant-design-vue';
+import { UserOutlined } from '@ant-design/icons-vue';
+
 export default {
+    components: {
+      ALayout: Layout,
+      ARow: Row,
+      ACol: Col,
+      AIcon: Icon,
+      AModal: Modal,
+      ABreadcrumb: Breadcrumb,
+      ABreadcrumbItem: Breadcrumb.Item,
+      ALayoutHeader: Layout.Header,
+      ALayoutContent: Layout.Content,
+      ADropdown: Dropdown,
+      AAvatar: Avatar,
+      AMenu: Menu,
+      ASubMenu: Menu.SubMenu,
+      AMenuItem: Menu.Item,
+      AMenuItemGroup: Menu.ItemGroup,
+      UserOutlined
+    },
     name: 'App',
     data() {
       return {
@@ -108,7 +141,7 @@ export default {
         naver: this.$mqj.naver,
         menu: this.$mqj.naver.currModuleMenu,
         moduleShow: false,
-        MODULES
+        MODULES,
       };
     },
     watch: {
@@ -118,11 +151,7 @@ export default {
       }
     },
     created() {
-      console.log(this.$mqj.naver.currModuleMenu, 'this')
-    },
-
-    updated: function () {
-    //  this.breadcrumb = this.mqj.naver.setBreadcrumb();
+      console.log(this, this.menu, 'this')
     },
     
     methods: {
@@ -215,8 +244,8 @@ export default {
 .slide-fade-leave-active {
   transition: all 0s;
 }
-.slide-fade-enter, .slide-fade-leave-to{
-  transform: translateY(10px);
+.slide-fade-enter-from, .slide-fade-leave-to{
+  transform: translateY(20px);
   opacity: 0;
 }
 .ant-modal-close-x{

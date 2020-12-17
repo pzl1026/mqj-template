@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   name: 'order',
   isTop: false,
-  // shared: [{ vue: { singleton: true } }],
+  shared: [{ vue: { singleton: true } }],
   // library: { type: 'var', name: 'vue' },   //如果需要remotes，就应该将该属性屏蔽
   dev: {
     st1: {
