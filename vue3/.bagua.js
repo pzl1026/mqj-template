@@ -9,6 +9,7 @@ module.exports = {
     st1: {
       port: '3003',
       nomocker: false,
+      filename: 'remoteEntry.js',
       exposes: {
         './pages': path.resolve(__dirname, 'src/pages'),
       },
