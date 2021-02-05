@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   name: 'common',
-  isTop: true,
+  autoOpen: true,
   shared: {
     // react: {
     //   singleton: true, // only a single version of the shared module is allowed
@@ -16,6 +16,7 @@ module.exports = {
     st1: {
       port: '3001',
       nomocker: false,
+      filename: 'remoteEntry.js',
       remotes: {
         goods: 'goods@//localhost:3003/remoteEntry.js',
         order: 'order@//localhost:3002/remoteEntry.js',
