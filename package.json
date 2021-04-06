@@ -3,9 +3,13 @@
   "private": true,
   "scripts": {
     "start": "bagua-cli -s start",
+    "start2": "bagua-cli2 -s start2",
     "build": "bagua-cli -p build",
+    "build2": "bagua-cli2 -s build2",
     "serve": "serve dist -p 3001",
-    "start:lerna": "lerna run --scope @mqj/* --parallel start"
+    "start:lerna": "lerna run --scope @mqj/* --parallel start",
+    "tmpServe": "bagua-cli2 tmpServe",
+    "staticServe": "bagua-cli2 staticServe"
   },
   "devDependencies": {
     "lerna": "^3.22.1",

@@ -8,7 +8,8 @@ export default {
     {
       path: '/list',
       name: '销售属性',
-      component: loadComponent('goods', './pages', 'PropsList'),
+      // component: loadComponent('goods', './pages', 'PropsList'),
+      component: () => import('goods/props'),
     }, 
   ]
 }

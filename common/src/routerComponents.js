@@ -1,2 +1,2 @@
-import('goods/pages');
-import('order/pages');
+// import('goods/pages');
+// import('order/pages');

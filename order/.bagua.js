@@ -1,8 +1,11 @@
 const path = require('path');
+const pages = require('./src/pages/pagesAsync');
 
 module.exports = {
   name: 'order',
   autoOpen: true,
+  staticDir: '/static', //生产完成后拷贝到哪个目录
+  serverDir: '../output',
   shared: [{ vue: { singleton: true } }],
   // library: { type: 'var', name: 'vue' },   //如果需要remotes，就应该将该属性屏蔽
   dev: {
@@ -11,7 +14,8 @@ module.exports = {
       nomocker: false,
       filename: 'remoteEntry.js',
       exposes: {
-        './pages': path.resolve(__dirname, 'src/pages'),
+        // './pages': path.resolve(__dirname, 'src/pages'),
+        ...pages
       },
       remotes: {
         // app2: 'app2@http://localhost:3002/remoteEntry.js',
@@ -47,15 +51,16 @@ module.exports = {
   },
   prod: {
     st1: {
+      filename: 'order/js/remoteEntry.js',
       remotes: {
-        // app2: 'app2@http://localhost:3002/remoteEntry.js',
-        common: 'common@//localhost:3001/remoteEntry.js'
+        common: 'common@//localhost:8080/common/js/remoteEntry.js'
       },
       exposes: {
-        './pages': path.resolve(__dirname, 'src/pages'),
+        // './pages': path.resolve(__dirname, 'src/pages'),
+        ...pages
       },
       output: {
-        publicPath: '//localhost:3001/goods/',
+        publicPath: '//localhost:8080/',
       },
     },
     default: {
