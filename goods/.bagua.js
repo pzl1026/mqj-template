@@ -7,9 +7,18 @@ module.exports = {
   staticDir: '/static', //生产完成后拷贝到哪个目录
   serverDir: '../output',
   shared: [{ vue: { singleton: true } }],
-  // library: { type: 'var', name: 'vue' },   //如果需要remotes，就应该将该属性屏蔽
   dev: {
     st1: {
+      devServer: {
+        proxy: {
+          '/api': {
+            target: 'http://st1-api.mingqijia.com/',
+            changeOrigin: true,
+          },
+        },
+      },
+    },
+    default: {
       port: '3003',
       nomocker: false,
       filename: 'remoteEntry.js',
@@ -18,31 +27,7 @@ module.exports = {
         ...pages
       },
       remotes: {
-        // app2: 'app2@http://localhost:3002/remoteEntry.js',
         common: 'common@//localhost:3001/remoteEntry.js'
-      },
-      devServer: {
-        proxy: {
-          '/api': {
-            target: 'http://st1-api.mingqijia.com/',
-            changeOrigin: true,
-          },
-        },
-      },
-      output: {
-        publicPath: '//localhost:3003/',
-      },
-    },
-    default: {
-      port: '3003',
-      nomocker: false,
-      devServer: {
-        proxy: {
-          '/api': {
-            target: 'http://st1-api.mingqijia.com/',
-            changeOrigin: true,
-          },
-        },
       },
       output: {
         publicPath: '//localhost:3003/',
@@ -51,19 +36,19 @@ module.exports = {
   },
   prod: {
     st1: {
-      filename: 'goods/js/remoteEntry.js',
       remotes: {
         common: 'common@//localhost:8080/common/js/remoteEntry.js'
-      },
-      exposes: {
-        // './pages': path.resolve(__dirname, 'src/pages'),
-        ...pages
       },
       output: {
         publicPath: '//localhost:8080/',
       },
     },
     default: {
+      filename: 'goods/js/remoteEntry.js',
+      exposes: {
+        // './pages': path.resolve(__dirname, 'src/pages'),
+        ...pages
+      },
       output: {
         publicPath: '//localhost:3003/',
       },
