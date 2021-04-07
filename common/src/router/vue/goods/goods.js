@@ -4,6 +4,9 @@ export default {
   path: '/goods',
   name: '商品管理',
   // component: loadComponent('app3', './pages', 'Goods'),
+  meta: {
+
+  },
   children: [
     {
       path: '/list',

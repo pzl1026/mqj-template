@@ -1,7 +1,9 @@
 <template>
   <a-layout>
     <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
-      <div class="logo" />
+      <div class="logo">
+        <img src="@/assets/logo.png" width="101" height="55" alt="logo"/>
+      </div>
       <a-menu
         theme="dark"
         mode="inline"
@@ -30,9 +32,9 @@
             <menu-unfold-outlined
               v-if="collapsed"
               class="trigger"
-              @click="() => (collapsed = !collapsed)"
+              @click="changeCollapsed"
             />
-            <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
+            <menu-fold-outlined v-else class="trigger" @click="changeCollapsed"/>
           </a-col>
           <a-col :span="1" >
             <a-dropdown placement="bottomRight">
@@ -113,6 +115,7 @@ import {
   MenuFoldOutlined,
   AppstoreOutlined
 } from '@ant-design/icons-vue';
+const COLLAPSED = '_xy_collapsed';
 
 export default {
   components: {
@@ -162,10 +165,16 @@ export default {
     }
   },
   created() {
-    console.log(this, this.menu, 'this')
+    console.log(this.collapsed, 'this.collapsed')
+    this.collapsed = localStorage.getItem(COLLAPSED) || false;
   },
   
   methods: {
+    changeCollapsed () {
+      this.collapsed = !this.collapsed ;
+      localStorage.setItem(COLLAPSED, this.collapsed);
+    },
+
     toPush (nav, parentPath) {
       this.$router.push({
         path: nav.path,
@@ -205,7 +214,7 @@ export default {
 #app .logo {
   width: 120px;
   height: 31px;
-  background: rgba(255, 255, 255, 0.2);
+  /* background: rgba(255, 255, 255, 0.2); */
   margin: 16px 24px 16px 0;
   float: left;
 }
@@ -267,9 +276,16 @@ export default {
   line-height: 30px;
 }
 .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 32px;
-  background: rgba(255, 255, 255, 0.2);
   margin: 16px;
+}
+.logo img{
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
 }
 .trigger:hover {
   color: #1890ff;
