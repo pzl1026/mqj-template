@@ -7,6 +7,7 @@ if(process.env.NODE_ENV == 'dev') {
 
 // 注册全局性组件
 import CommonTest from './components/commonTest';
+import SearchTable from './components/searchTable';
 // import MTable from './components/mtable';
 // import MForm from './components/mform';
 // import MFormItem from './components/mFormItem';
@@ -99,7 +100,8 @@ let components = {
   AConfigProvider: ConfigProvider,
   ATransfer: Transfer,
   ATree: Tree,
-  CommonTest
+  CommonTest,
+  SearchTable
   // MTable,
   // MForm,
   // MSearch,

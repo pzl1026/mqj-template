@@ -1,11 +1,11 @@
 <template>
   <a-form ref="formRef" :model="dynamicValidateForm" v-bind="formItemLayoutWithOutLabel">
     <a-form-item
-      v-for="(formItem, index) in dynamicValidateForm.formItems"
-      :key="formItem.name"
-      v-bind="formItemLayout"
-      :label="formItem.name"
-      :name="['formItems', index, 'value']"
+      v-for="(domain, index) in dynamicValidateForm.domains"
+      :key="domain.key"
+      v-bind="index === 0 ? formItemLayout : {}"
+      :label="index === 0 ? 'Domains' : ''"
+      :name="['domains', index, 'value']"
       :rules="{
         required: true,
         message: 'domain can not be null',
@@ -13,10 +13,22 @@
       }"
     >
       <a-input
-        v-model:value="formItem.value"
+        v-model:value="domain.value"
         placeholder="please input domain"
         style="width: 60%; margin-right: 8px"
       />
+      <MinusCircleOutlined
+        v-if="dynamicValidateForm.domains.length > 1"
+        class="dynamic-delete-button"
+        :disabled="dynamicValidateForm.domains.length === 1"
+        @click="removeDomain(domain)"
+      />
+    </a-form-item>
+    <a-form-item v-bind="formItemLayoutWithOutLabel">
+      <a-button type="dashed" style="width: 60%" @click="addDomain">
+        <PlusOutlined />
+        Add field
+      </a-button>
     </a-form-item>
     <a-form-item v-bind="formItemLayoutWithOutLabel">
       <a-button type="primary" html-type="submit" @click="submitForm">Submit</a-button>
@@ -24,8 +36,8 @@
     </a-form-item>
   </a-form>
 </template>
-
 <script>
+import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons-vue';
 import {defineComponent, reactive, ref} from 'vue';
 const formItemLayout = {
   labelCol: {
@@ -60,14 +72,8 @@ const formItemLayoutWithOutLabel = {
 export default defineComponent({
   setup () {
     const formRef = ref();
-
     const dynamicValidateForm = reactive({
-      formItems: [
-        {
-          name: 'id',
-          value: '222'
-        }
-      ],
+      domains: [],
     });
 
     const submitForm = () => {
@@ -85,6 +91,21 @@ export default defineComponent({
       formRef.value.resetFields();
     };
 
+    const removeDomain = item => {
+      let index = dynamicValidateForm.domains.indexOf(item);
+
+      if (index !== -1) {
+        dynamicValidateForm.domains.splice(index, 1);
+      }
+    };
+
+    const addDomain = () => {
+      dynamicValidateForm.domains.push({
+        value: '',
+        key: Date.now(),
+      });
+    };
+
     return {
       formRef,
       formItemLayout,
@@ -92,7 +113,31 @@ export default defineComponent({
       dynamicValidateForm,
       submitForm,
       resetForm,
+      removeDomain,
+      addDomain,
     };
-  }
+  },
+
+  components: {
+    MinusCircleOutlined,
+    PlusOutlined,
+  },
 });
 </script>
+<style>
+.dynamic-delete-button {
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  font-size: 24px;
+  color: #999;
+  transition: all 0.3s;
+}
+.dynamic-delete-button:hover {
+  color: #777;
+}
+.dynamic-delete-button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+</style>

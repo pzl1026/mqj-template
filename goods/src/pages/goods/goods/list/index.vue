@@ -3,6 +3,7 @@
     <h1>这里是商品列表112</h1>
     <!-- <Common /> -->
     <CommonTest />
+    <SearchTable />
   </div>
 </template>
 
