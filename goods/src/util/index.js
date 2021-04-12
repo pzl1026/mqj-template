@@ -8,7 +8,9 @@ export function loadComponent(scope, module, component) {
     await container.init(__webpack_share_scopes__.default);
     const factory = await window[scope].get(module);
     const Module = factory();
+    console.log(Module, 'Module')
     if (component) {
+      console.log(Module.default[component])
       return Module.default[component];
     }
     return Module;

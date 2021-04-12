@@ -145,7 +145,6 @@ export default {
   name: 'App',
   data() {
     return {
-      collapsed: false,
       current: ['1'],
       openKeys: ['sub1'],
       collapsed: false,
@@ -165,8 +164,7 @@ export default {
     }
   },
   created() {
-    console.log(this.collapsed, 'this.collapsed')
-    this.collapsed = localStorage.getItem(COLLAPSED) || false;
+    this.collapsed = localStorage.getItem(COLLAPSED) == 'true' ? true : false;
   },
   
   methods: {

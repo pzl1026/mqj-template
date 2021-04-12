@@ -1,5 +1,16 @@
 export const MAX_RECENT_NUM = 5;   // 最近访问最大记录数
 export const RECENT_LOCAL = '_mqj_recent'; // 最近访问 localstoage name
+export const USERINFO = '_mqj_userInfo';
+export const PERMISSION = '_mqj_permission';
+export const MQJ_TOKEN = '_mqj_token';
+export const AUTHORIZATION = 'Authorization';
+export const TOKEN = 'Token';
+export const X_ACCOUNT_TYPE = 'X-ACCOUNT-TYPE';
+export const X_ACCOUNT_TYPE_VALUE = 'M';
+export const BRACHNAME = 'branchname';
+export const BRACHNAME_VALUE = 'branchname';
+export const BUCKETS = '_mqj_buckets';
+export const DEFAULT_URL = '/goods#/goods/list';
 
 export const MODULES = [      // 所有模块
   {

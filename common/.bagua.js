@@ -32,7 +32,7 @@ module.exports = {
       },
       exposes: {
         './util': path.resolve(__dirname, 'src/util'),
-        './components': path.resolve(__dirname, 'src/components'),
+        // './components': path.resolve(__dirname, 'src/components'),
       },
       output: {
         publicPath: '//localhost:3001/',
