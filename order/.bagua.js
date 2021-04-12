@@ -3,7 +3,7 @@ const pages = require('./src/pages/pagesAsync');
 
 module.exports = {
   name: 'order',
-  autoOpen: true,
+  autoOpen: false,
   staticDir: '/static', //生产完成后拷贝到哪个目录
   serverDir: '../output',
   shared: [{ vue: { singleton: true } }],
