@@ -1,23 +1,28 @@
 <template>
   <a-form ref="formRef" :model="dynamicValidateForm" v-bind="formItemLayoutWithOutLabel">
-    <a-form-item
-      v-for="(formItem, index) in dynamicValidateForm.formItems"
-      :key="formItem.name"
-      v-bind="formItemLayout"
-      :label="formItem.name"
-      :name="['formItems', index, 'value']"
-      :rules="{
-        required: true,
-        message: 'domain can not be null',
-        trigger: 'change',
-      }"
-    >
-      <a-input
-        v-model:value="formItem.value"
-        placeholder="please input domain"
-        style="width: 60%; margin-right: 8px"
-      />
-    </a-form-item>
+    <a-row :gutter="24">
+      <a-col
+        v-for="i in 10"
+        :key="i"
+        :span="8"
+      >
+        <a-form-item
+          v-for="(formItem, index) in dynamicValidateForm.formItems"
+          :key="formItem.name"
+          v-bind="{
+            ...formItemLayout,
+            ...formItem,
+          }"
+          :name="['formItems', index, 'value']"
+        >
+          <a-input
+            v-model:value="formItem.value"
+            placeholder="please input domain"
+            style="width: 60%; margin-right: 8px"
+          />
+        </a-form-item>
+      </a-col>
+    </a-row>
     <a-form-item v-bind="formItemLayoutWithOutLabel">
       <a-button type="primary" html-type="submit" @click="submitForm">Submit</a-button>
       <a-button style="margin-left: 10px" @click="resetForm">Reset</a-button>
@@ -26,7 +31,7 @@
 </template>
 
 <script>
-import {defineComponent, reactive, ref} from 'vue';
+import {defineComponent, reactive, ref, toRaw} from 'vue';
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -57,27 +62,43 @@ const formItemLayoutWithOutLabel = {
     },
   },
 };
+
+const getParams = (values) => {
+  let params = {};
+  toRaw(values).forEach(item => {
+    params[item.name] = item.value;
+  });
+  return params;
+};
+
 export default defineComponent({
-  setup () {
+  props: {
+    formItems: {
+      type: Array,
+      default: []
+    },
+    fixParams: {
+      type: Object,
+      default: {}
+    }
+  },
+  setup (props) {
     const formRef = ref();
 
     const dynamicValidateForm = reactive({
-      formItems: [
-        {
-          name: 'id',
-          value: '222'
-        }
-      ],
+      formItems: props.formItems,
     });
 
     const submitForm = () => {
       formRef.value
         .validate()
         .then(() => {
-          console.log('values', dynamicValidateForm.domains);
+          console.log('values', dynamicValidateForm.formItems);
+          const params = Object.assign({}, props.fixParams, getParams(dynamicValidateForm.formItems));
+          console.log(params, 'parass');
         })
         .catch(error => {
-          console.log('error', error);
+          console.warning('error', error);
         });
     };
 

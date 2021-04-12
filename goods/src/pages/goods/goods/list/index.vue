@@ -3,7 +3,7 @@
     <h1>这里是商品列表112</h1>
     <!-- <Common /> -->
     <CommonTest />
-    <SearchTable />
+    <SearchTable :formItems="formItems"/>
   </div>
 </template>
 
@@ -12,11 +12,17 @@
 //   console.log(res, '这里可以引用common/util的模块22');
 // })
 import {loadComponent} from '@/util';
+import {formItems} from './config';
 
 export default {
-   components: { 
-      // Common: loadComponent("common", './components', 'Common'), 
-    },
+  data() {
+    return {
+      formItems
+    }
+  },
+  components: { 
+    // Common: loadComponent("common", './components', 'Common'), 
+  },
 }
 
 
