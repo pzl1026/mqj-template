@@ -1,52 +1,43 @@
 <template>
-  <a-form ref="formRef" :model="dynamicValidateForm" v-bind="formItemLayoutWithOutLabel">
-    <a-row :gutter="24">
-      <a-col
-        v-for="i in 10"
-        :key="i"
-        :span="8"
-      >
-        <a-form-item
+  <div class="search-form-body">
+    <a-form ref="formRef" :model="dynamicValidateForm" v-bind="formItemLayoutWithOutLabel">
+      <a-row :gutter="24">
+        <a-col
           v-for="(formItem, index) in dynamicValidateForm.formItems"
           :key="formItem.name"
-          v-bind="{
-            ...formItemLayout,
-            ...formItem,
-          }"
-          :name="['formItems', index, 'value']"
+          :span="formItem.span || 8"
         >
-          <a-input
-            v-model:value="formItem.value"
-            placeholder="please input domain"
-            style="width: 60%; margin-right: 8px"
-          />
-        </a-form-item>
-      </a-col>
-    </a-row>
-    <a-form-item v-bind="formItemLayoutWithOutLabel">
-      <a-button type="primary" html-type="submit" @click="submitForm">Submit</a-button>
-      <a-button style="margin-left: 10px" @click="resetForm">Reset</a-button>
-    </a-form-item>
-  </a-form>
+          <a-form-item
+            v-bind="{
+              ...formItemLayout,
+              ...formItem,
+            }"
+            :name="['formItems', index, 'value']"
+            class="mqj-form-item-nospan"
+          >
+            <a-input
+              v-model:value="formItem.value"
+              placeholder="please input domain"
+            />
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-form-item :wrapperCol="{xs: {span: 4, offset: 20}}">
+        <div class="search-submit">
+          <a-button type="primary" html-type="submit" @click="submitForm">查询</a-button>
+          <a-button style="margin-left: 10px" @click="resetForm">重置</a-button>
+        </div>
+      </a-form-item>
+    </a-form>
+  </div>
 </template>
 
 <script>
 import {defineComponent, reactive, ref, toRaw} from 'vue';
 const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 4,
-    },
-  },
   wrapperCol: {
     xs: {
-      span: 24,
-    },
-    sm: {
-      span: 20,
+      span: 16,
     },
   },
 };
@@ -87,7 +78,14 @@ export default defineComponent({
 
     const dynamicValidateForm = reactive({
       formItems: props.formItems,
+      minCount: 3
     });
+
+    const collapseFormItems = () => {
+      dynamicValidateForm.formItems = props.formItems.splice(0, dynamicValidateForm.minCount);
+    };
+
+    collapseFormItems();
 
     const submitForm = () => {
       formRef.value
@@ -117,3 +115,20 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="scss">
+  .search-submit{
+    display: flex;
+    justify-content: flex-end;
+  }
+  .mqj-form-item-nospan .ant-form-item-label {
+    width: 140px;
+    margin-right: 5px;
+  }
+  .search-form-body{
+    padding: 24px;
+    background: #fbfbfb;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+  }
+</style>
