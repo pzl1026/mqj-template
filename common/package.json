@@ -38,10 +38,11 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "ant-design-vue": "^2.0.0-rc.5",
+    "ant-design-vue": "^2.1.2",
     "axios": "^0.21.1",
     "cos-js-sdk-v5": "^1.2.8",
     "js-md5": "^0.7.3",
+    "moment": "^2.29.1",
     "vue": "^3.0.4",
     "vue-router": "^4.0.1"
   }

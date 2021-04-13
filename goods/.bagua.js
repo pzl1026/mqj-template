@@ -24,7 +24,7 @@ module.exports = {
       filename: 'remoteEntry.js',
       exposes: {
         // './pages': path.resolve(__dirname, 'src/pages'),
-        ...pages
+        ...pages,
       },
       remotes: {
         common: 'common@//localhost:3001/remoteEntry.js'
@@ -47,7 +47,7 @@ module.exports = {
       filename: 'goods/js/remoteEntry.js',
       exposes: {
         // './pages': path.resolve(__dirname, 'src/pages'),
-        ...pages
+        ...pages,
       },
       output: {
         publicPath: '//localhost:3003/',
