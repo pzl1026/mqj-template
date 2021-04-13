@@ -1,6 +1,9 @@
 <template>
   <div class="search-form-body">
-    <a-form ref="formRef" :model="dynamicValidateForm" v-bind="formItemLayoutWithOutLabel">
+    <a-form ref="formRef" 
+    :model="params" 
+    v-bind="formItemLayoutWithOutLabel" 
+    :rules="rules">
       <a-row :gutter="24">
         <a-col
           v-for="(formItem, index) in dynamicValidateForm.formItems"
@@ -15,7 +18,6 @@
             :name="formItem.name"
             class="mqj-form-item-nospan"
           >
-           <!-- :name="['formItems', index, paramsType(formItem.component.name)]" -->
             <template v-if="formItem.component == undefined || formItem.component.name == undefined">
               <span style="color: #f00">该项缺少component.name字段</span>
             </template>
@@ -28,19 +30,44 @@
           <a-button type="primary" html-type="submit" @click="submitForm">查询</a-button>
           <a-button style="margin-left: 10px" @click="resetForm">重置</a-button>
           <a :style="{ marginLeft: '8px', fontSize: '12px' }" @click="collapseFormItems">
-            {{formItems.length > 3 ? '收起' : '展开'}} 
-            <UpOutlined v-if="formItems.length > 3" />
+            {{collapsed ? '收起' : '展开'}} 
+            <UpOutlined v-if="collapsed" />
             <DownOutlined v-else />
           </a>
         </div>
       </a-form-item>
     </a-form>
   </div>
+  <a-row :gutter="[16, 16]" style="margin-top: 16px">
+    <a-col :span="24">
+      <a-table 
+      :dataSource="dataSource" 
+      :columns="columns" 
+      v-bind="tableProps" 
+      :pagination="false"/>
+    </a-col>
+    <a-col :span="24" class="table-pagination">
+      <a-config-provider :locale="zhCN">
+        <a-pagination
+          show-size-changer
+          v-model:current="pageParams.current"
+          v-model:pageSize="pageParams.pageSize"
+          :total="pageParams.total"
+          @change="pageChange"
+          @showSizeChange="showSizeChange"
+        />
+      </a-config-provider>
+    </a-col>
+  </a-row>
+
 </template>
 
 <script>
-import { defineComponent, reactive, ref, toRaw, toRefs } from 'vue';
+import { defineComponent, reactive, ref, toRaw, toRefs, watch, onMounted } from 'vue';
 import { DownOutlined, UpOutlined } from '@ant-design/icons-vue';
+import ConfigProvider from 'ant-design-vue/lib/config-provider';
+import zhCN from 'ant-design-vue/es/date-picker/locale/zh_CN';
+
 import allItems from '@/components/formItems';
 const formItemLayout = {
   wrapperCol: {
@@ -71,9 +98,11 @@ const getParams = (values) => {
 };
 
 export default defineComponent({
+  emits: ['init'],
   components: {
     DownOutlined,
     UpOutlined,
+    AConfigProvider: ConfigProvider,
     ...allItems
   },
   props: {
@@ -88,11 +117,36 @@ export default defineComponent({
     minCount: {
       type: Number,
       default: 3
+    },
+    tableProps: {
+      type: Object,
+      default: {}
+    },
+    api: {
+      type: Function,
+      default: () => {}
+    },
+    columns: {
+      type: Array,
+      default: []
+    },
+    handleData: {
+      type: [Function, undefined],
+      default: undefined
+    },
+    collapsed: {
+      type: Boolean,
+      default: false
+    },
+    // rules，暂时有问题，不作处理
+    rules: {
+      type: Object,
+      default: {}
     }
   },
   data() {
     return {
-      // componentName: 'MInput'
+      zhCN
     }
   },
   methods: {
@@ -107,8 +161,8 @@ export default defineComponent({
       }
     }
   },
-  setup (props) {
-    const {formItems, minCount} = props;
+  setup (props, context) {
+    const {formItems, minCount, api} = props;
     const formRef = ref();
 
     const dynamicValidateForm = reactive({
@@ -116,7 +170,17 @@ export default defineComponent({
     });
     const formState = reactive({
       minCount,
-      collapsed: false
+      collapsed: props.collapsed
+    });
+
+    const state = reactive({
+      dataSource: [],
+      params: getParams(props.formItems),
+      pageParams: {
+        current: 1,
+        total: 100,
+        pageSize: 10
+      }
     });
 
     const collapseFormItems = () => {
@@ -127,8 +191,33 @@ export default defineComponent({
         dynamicValidateForm.formItems = formItems.slice(0, formState.minCount);
       }
     };
+    
+    const getData = async (params) => {
+      const data = await api(params);
+      if (data.data.list) {
+        state.dataSource = props.handleData ? props.handleData(data.data.list) : data.data.list;
+      } else {
+        console.error('没有data.list');
+      }
+    }
 
     collapseFormItems();
+
+    watch(() => [state.params, state.pageParams], 
+    ([newParamsVal, newPageParamsVal], [prevParamsVal, prevPageParamsVal]) => {
+      getData(Object.assign({}, toRaw(newParamsVal), toRaw(newPageParamsVal), props.fixParams));
+    });
+
+    function load () {
+      getData(Object.assign({}, toRaw(state.params), toRaw(state.pageParams), props.fixParams));
+
+    }
+
+    load();
+
+    onMounted(() => {
+      context.emit('init', load);
+    });
 
     const submitForm = () => {
       formRef.value
@@ -138,10 +227,12 @@ export default defineComponent({
           const params = Object.assign({}, props.fixParams, getParams(dynamicValidateForm.formItems));
           let rangeItems = formItems.filter(item => item.component.name == 'MRangePicker');
           rangeItems.forEach(item => {
-            params[item.valueFields[0]] = params[item.name][0].format(formatDate);
-            params[item.valueFields[1]] = params[item.name][1].format(formatDate);
+            params[item.valueFields[0]] = params[item.name][0] && params[item.name][0].format(formatDate);
+            params[item.valueFields[1]] = params[item.name][1] && params[item.name][1].format(formatDate);
             delete params[item.name];
+
           });
+          state.params = params;
         })
         .catch(error => {
           console.warn('error', error);
@@ -159,15 +250,32 @@ export default defineComponent({
       });
     };
 
+    const pageChange = (val) => {
+      state.pageParams = {
+        ...state.pageParams,
+        current: val
+      };
+    };
+
+    const showSizeChange = (val, size) => {
+       state.pageParams = {
+        ...state.pageParams,
+        pageSize: size
+      }
+    };
+
     return {
       formRef,
       formItemLayout,
       formItemLayoutWithOutLabel,
       dynamicValidateForm,
       ...toRefs(formState),
+      ...toRefs(state),
       submitForm,
       resetForm,
-      collapseFormItems
+      collapseFormItems,
+      pageChange,
+      showSizeChange
     };
   }
 });
@@ -186,6 +294,15 @@ export default defineComponent({
     padding: 24px;
     background: #fbfbfb;
     border: 1px solid #d9d9d9;
-    border-radius: 6px;
+    border-radius: 3px;
+  }
+  .table-pagination{
+    display: flex;
+    justify-content: flex-end;
+    .ant-pagination-item-link{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 </style>

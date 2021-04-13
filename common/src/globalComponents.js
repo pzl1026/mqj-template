@@ -47,7 +47,8 @@ import {
   Divider,
   Pagination,
   Transfer,
-  Tree
+  Tree,
+  Space
 } from 'ant-design-vue';
 import ConfigProvider from 'ant-design-vue/lib/config-provider';
 
@@ -100,6 +101,7 @@ let components = {
   AConfigProvider: ConfigProvider,
   ATransfer: Transfer,
   ATree: Tree,
+  ASpace: Space,
   CommonTest,
   SearchTable
   // MTable,
