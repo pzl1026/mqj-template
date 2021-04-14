@@ -1,8 +1,8 @@
 const path = require('path');
 const pages = require('./src/pages/pagesAsync');
-
+console.log(pages, 'pahhh')
 module.exports = {
-  name: 'goods',
+  name: 'vue3',
   autoOpen: false,
   staticDir: '/static', //生产完成后拷贝到哪个目录
   serverDir: '../output',
@@ -19,7 +19,7 @@ module.exports = {
       },
     },
     default: {
-      port: '3003',
+      port: '3004',
       nomocker: false,
       filename: 'remoteEntry.js',
       exposes: {
@@ -29,7 +29,7 @@ module.exports = {
         common: 'common@//localhost:3001/remoteEntry.js'
       },
       output: {
-        publicPath: '//localhost:3003/',
+        publicPath: '//localhost:3004/',
       },
     },
   },
