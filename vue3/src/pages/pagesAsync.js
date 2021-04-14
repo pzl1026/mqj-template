@@ -1,0 +1,24 @@
+const path = require('path');
+const pagesArgs = {
+  demo: [
+    {name: 'list', path: 'list'}, 
+  ],
+};
+
+function pagePath(pagesArgs) {
+  let pagesModule = {};
+  for(let [k,v] of Object.entries(pagesArgs)) {
+    v.forEach(item => {
+      if (typeof(item) == 'string') {
+        pagesModule['./' + item] = path.resolve(__dirname, `${k}/${item}`)
+      }
+      if (typeof(item) == 'object') {
+        pagesModule['./' + item.name] = path.resolve(__dirname, `${k}/${item.path}`)
+      }
+      
+    })
+  }
+  return pagesModule;
+}
+
+module.exports = pagePath(pagesArgs);

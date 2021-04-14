@@ -1,5 +1,5 @@
 {
-  "name": "@mqj/goods",
+  "name": "@mqj/vue3",
   "version": "0.0.1",
   "devDependencies": {
     "@babel/core": "7.11.4",
@@ -27,7 +27,9 @@
   },
   "scripts": {
     "start": "bagua-cli -d st1",
+    "start2": "bagua-cli2 -d st1",
     "build": "bagua-cli -b st1",
+    "build2": "bagua-cli2 -b st1",
     "serve": "serve dist -p 3003",
     "clean": "rm -rf dist"
   },
