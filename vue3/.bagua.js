@@ -1,6 +1,6 @@
 const path = require('path');
 const pages = require('./src/pages/pagesAsync');
-console.log(pages, 'pahhh')
+
 module.exports = {
   name: 'vue3',
   autoOpen: false,
