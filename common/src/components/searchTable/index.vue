@@ -40,6 +40,9 @@
   </div>
   <a-row :gutter="[16, 16]" style="margin-top: 16px">
     <a-col :span="24">
+      <slot name="actions"></slot>
+    </a-col>
+    <a-col :span="24">
       <a-table 
       :dataSource="dataSource" 
       :columns="columns" 

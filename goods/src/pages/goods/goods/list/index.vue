@@ -9,6 +9,9 @@
     :api="getData"
     @init="initial"
     >
+    <template #actions>
+      <a-button>创建</a-button>
+    </template>
     <template #action>
       <a>操作</a>
     </template>
