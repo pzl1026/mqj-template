@@ -7,9 +7,12 @@
     :formItems="formItems" 
     :columns="columns" 
     :api="getData"
-    :rules="rules"
     @init="initial"
-    />
+    >
+    <template #action>
+      <a>操作</a>
+    </template>
+    </SearchTable>
   </div>
 </template>
 
@@ -18,7 +21,7 @@
 //   console.log(res, '这里可以引用common/util的模块22');
 // })
 import {loadComponent} from '@/util';
-import {formItems, columns, rules} from './config';
+import {formItems, columns} from './config';
 import {getData} from './api';
 
 export default {
@@ -28,7 +31,6 @@ export default {
       getData,
       columns,
       load: null,
-      rules
     }
   },
   components: { 

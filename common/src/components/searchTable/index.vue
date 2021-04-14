@@ -44,7 +44,11 @@
       :dataSource="dataSource" 
       :columns="columns" 
       v-bind="tableProps" 
-      :pagination="false"/>
+      :pagination="false">
+        <template v-for="(item,index) in tableActionSlots" :key="item" v-slot:[item]>
+          <slot :name="item"></slot>
+        </template>
+      </a-table>
     </a-col>
     <a-col :span="24" class="table-pagination">
       <a-config-provider :locale="zhCN">
@@ -59,7 +63,6 @@
       </a-config-provider>
     </a-col>
   </a-row>
-
 </template>
 
 <script>
@@ -95,6 +98,16 @@ const getParams = (values) => {
     params[item.name] = item.value;
   });
   return params;
+};
+
+const tableSlots = (columns) => {
+  let slots = [];
+  for (let v of columns) {
+    if (v.slots && v.slots.customRender) {
+      slots.push(v.slots.customRender);
+    }
+  }
+  return slots;
 };
 
 export default defineComponent({
@@ -146,19 +159,8 @@ export default defineComponent({
   },
   data() {
     return {
-      zhCN
-    }
-  },
-  methods: {
-    paramsType(name) {
-      switch(name) {
-        case 'MRangePicker': 
-          return ['value', 'value'];
-        case 'MInputNumber': 
-          return 'value';
-        default : 
-            return 'value'
-      }
+      zhCN,
+      tableActionSlots: tableSlots(this.columns)
     }
   },
   setup (props, context) {
