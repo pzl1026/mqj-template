@@ -4,7 +4,7 @@ const pages = require('./src/pages/pagesAsync');
 module.exports = {
   name: 'goods',
   autoOpen: false,
-  staticDir: '/static', //生产完成后拷贝到哪个目录
+  staticDir: '/static/demo', //生产完成后拷贝到哪个目录
   serverDir: '../output',
   shared: [{ vue: { singleton: true } }],
   dev: {
@@ -37,11 +37,8 @@ module.exports = {
   prod: {
     st1: {
       remotes: {
-        common: 'common@//localhost:8080/common/js/remoteEntry.js'
-      },
-      output: {
-        publicPath: '//localhost:8080/',
-      },
+        common: 'common@//localhost:8080/demo/common/js/remoteEntry.js'
+      }
     },
     default: {
       filename: 'goods/js/remoteEntry.js',
@@ -50,7 +47,7 @@ module.exports = {
         ...pages,
       },
       output: {
-        publicPath: '//localhost:3003/',
+        publicPath: '//localhost:8080/demo/',
       },
     },
   },

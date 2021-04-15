@@ -8,8 +8,8 @@
     "build2": "bagua-cli2 -s build2",
     "serve": "serve dist -p 3001",
     "start:lerna": "lerna run --scope @mqj/* --parallel start",
-    "tmpServe": "bagua-cli2 tmpServe",
-    "staticServe": "bagua-cli2 staticServe"
+    "tmpServe": "bagua-cli tmpServe",
+    "staticServe": "bagua-cli staticServe"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

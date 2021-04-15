@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   name: 'common',
   autoOpen: true,
-  staticDir: '/static',
+  staticDir: '/static/demo',
   viewDir: '/view',
   serverDir: '../output',
   shared: {
@@ -42,11 +42,8 @@ module.exports = {
   prod: {
     st1: {
       remotes: {
-        goods: 'goods@//localhost:8080/goods/js/remoteEntry.js',
-        order: 'order@//localhost:8080/order/js/remoteEntry.js',
-      },
-      output: {
-        publicPath: '//localhost:8080/',
+        goods: 'goods@//localhost:8080/demo/goods/js/remoteEntry.js',
+        order: 'order@//localhost:8080/demo/order/js/remoteEntry.js',
       },
     },
     default: {
@@ -56,7 +53,7 @@ module.exports = {
         './components': path.resolve(__dirname, 'src/components'),
       },
       output: {
-        publicPath: '//localhost:3001/',
+        publicPath: '//localhost:8080/demo/',
       },
     },
   },
