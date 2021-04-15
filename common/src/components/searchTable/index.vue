@@ -54,16 +54,15 @@
       </a-table>
     </a-col>
     <a-col :span="24" class="table-pagination">
-      <a-config-provider :locale="zhCN">
-        <a-pagination
-          show-size-changer
-          v-model:current="pageParams.current"
-          v-model:pageSize="pageParams.pageSize"
-          :total="pageParams.total"
-          @change="pageChange"
-          @showSizeChange="showSizeChange"
-        />
-      </a-config-provider>
+      <a-pagination
+        show-size-changer
+        show-quick-jumper
+        v-model:current="pageParams.current"
+        v-model:pageSize="pageParams.pageSize"
+        :total="pageParams.total"
+        @change="pageChange"
+        @showSizeChange="showSizeChange"
+      />
     </a-col>
   </a-row>
 </template>
@@ -72,7 +71,6 @@
 import { defineComponent, reactive, ref, toRaw, toRefs, watch, onMounted } from 'vue';
 import { DownOutlined, UpOutlined } from '@ant-design/icons-vue';
 import ConfigProvider from 'ant-design-vue/lib/config-provider';
-import zhCN from 'ant-design-vue/es/date-picker/locale/zh_CN';
 
 import allItems from '@/components/formItems';
 const formItemLayout = {
@@ -162,7 +160,6 @@ export default defineComponent({
   },
   data() {
     return {
-      zhCN,
       tableActionSlots: tableSlots(this.columns)
     }
   },

@@ -1,4 +1,5 @@
 <template>
+  <a-config-provider :locale="zhCN">
   <a-layout>
     <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
       <div class="logo">
@@ -92,6 +93,7 @@
       </a-layout-content>
     </a-layout>
   </a-layout>
+  </a-config-provider>
 </template>
 
 <script>
@@ -107,6 +109,7 @@ import {
   Avatar, 
   Menu 
 } from 'ant-design-vue';
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
 import {
   UserOutlined,
   VideoCameraOutlined,
@@ -155,6 +158,7 @@ export default {
       menu: this.$mqj.naver.currModuleMenu,
       moduleShow: false,
       MODULES,
+      zhCN
     };
   },
   watch: {
