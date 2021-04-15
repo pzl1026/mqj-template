@@ -3,6 +3,7 @@ import Login from '@/widgets/account/login';
 export default {
   path: '/account',
   name: '账号',
+  hidden: true,
   // component: Login,
   children: [
     {

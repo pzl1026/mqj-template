@@ -171,13 +171,25 @@ export default {
       this.breadcrumb = this.naver.setBreadcrumb(to);
       this.recent = this.naver.saveStore(to);
       this.changeIsLogin(to);
+      this.naver.setCurrentParamsQuery(to.params, to.query);
+      this.current = [this.naver.getMenuActive(to.path)];
     }
   },
   created() {
     this.collapsed = localStorage.getItem(COLLAPSED) == 'true' ? true : false;
+    // this.menu = this.getMenu(this.$mqj.naver.currModuleMenu);
+    console.log(this.menu, 'ddd');
   },
-  
+
   methods: {
+    getMenu (menu = []) {
+      return menu.filter(item => {
+        if (item.children && item.children.length) {
+          item.children = this.getMenu(item.children);
+        }
+        return item.hidden != true;
+      });
+    },
     changeCollapsed () {
       this.collapsed = !this.collapsed ;
       localStorage.setItem(COLLAPSED, this.collapsed);
@@ -189,7 +201,6 @@ export default {
       });
     },
     changeIsLogin (to) {
-      console.log(/\/account/.test(to.path), 'toto')
       if (/\/account/.test(to.path)) {
         this.isLogin = true;
         localStorage.removeItem(USERINFO);

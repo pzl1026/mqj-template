@@ -28,7 +28,8 @@ class Nav {
 
     let moduleName =  window.location.href.match(exp) && window.location.href.match(exp)[1];
 
-    this.currModuleMenu = this.navs[moduleName || 'openplatform'];
+    this.currModuleMenu = this.navs[moduleName || 'asst'];
+    console.log(this.currModuleMenu, 'this.currModuleMenu')
     this.currModule = moduleName;
     this.handleRouterFlat(this.currModuleMenu, moduleName);
     // 过滤一下账号菜单
@@ -43,7 +44,8 @@ class Nav {
       let o = {
         ...item,
         module: moduleName,
-        originPath: item.path
+        originPath: item.path,
+        parentPath
       };
 
       item.path = o.path = parentPath + item.path;
@@ -58,7 +60,6 @@ class Nav {
 
   // 获取当前某个菜单的属性
   getCurrentMenuProps () {
-    this.setTitle();
     let exp = new RegExp('[a-z0-9A-Z]{1,}(?!.*[a-z0-9A-Z]{1,})');
 
     let currMenu = window.location.href.match(exp)[0];
@@ -91,7 +92,6 @@ class Nav {
       }
     });
     this.breadcrumb = breadcrumb;
-    this.setTitle();
     return this.breadcrumb;
   }
 
@@ -108,12 +108,6 @@ class Nav {
       count++;
     }
     return p;
-  }
-
-  // 设置页面title
-  setTitle () {
-    // this.menuRouter.find(m => m.name == this.module);
-    
   }
 
   // 存储最近访问路径
@@ -205,6 +199,24 @@ class Nav {
         }
       }
     });
+  }
+
+  getMenuActive(path) {
+    if (/\/account/.test(path)) return;
+    let pathActive = '';
+    let handle = (path) => {
+      let currentRoute = this.menuRouter.find(m => m.path == path);
+      if (currentRoute) {
+        if (currentRoute.hidden){
+          handle(currentRoute.parentPath);
+        } else {
+          console.log(currentRoute.path, 'currentRoute.path9988')
+          pathActive = currentRoute.path;
+        }
+      }
+    }
+    handle(path);
+    return pathActive;
   }
 }
 
