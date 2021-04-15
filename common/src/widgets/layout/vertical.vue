@@ -1,6 +1,9 @@
 <template>
   <a-config-provider :locale="zhCN">
-  <a-layout>
+  <transition name="slide-fade" v-if="isLogin">
+    <router-view/>
+  </transition>
+  <a-layout v-else>
     <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
       <div class="logo">
         <img src="@/assets/logo.png" width="101" height="55" alt="logo"/>
@@ -14,9 +17,7 @@
         <a-sub-menu v-for="item in menu" :key="item.path">
           <template #title>
             <span class="submenu-title-wrapper">
-              <a-icon type="appstore" />
-              <!-- <AppstoreOutlined /> -->
-              <component :is="item.meta.icon"></component>
+              <component :is="item.meta && item.meta.icon"/>
               <span>{{item.name}}</span>
             </span>
           </template>
@@ -42,7 +43,7 @@
             <a-dropdown placement="bottomRight">
               <div class="nav-admin">
                 <a-avatar :size="40">
-                    <template #icon><UserOutlined /></template>
+                  <template #icon><UserOutlined /></template>
                 </a-avatar>
               </div>
               <template #overlay>
@@ -119,6 +120,7 @@ import {
   MenuFoldOutlined,
   AppstoreOutlined
 } from '@ant-design/icons-vue';
+import {MQJ_TOKEN, USERINFO, PERMISSION, AUTHORIZATION, TOKEN} from '@/mqj/mqj.config';
 const COLLAPSED = '_xy_collapsed';
 
 export default {
@@ -159,13 +161,16 @@ export default {
       menu: this.$mqj.naver.currModuleMenu,
       moduleShow: false,
       MODULES,
-      zhCN
+      isLogin: false,
+      zhCN,
+      userInfo: JSON.parse(localStorage.getItem(USERINFO))
     };
   },
   watch: {
     '$route' (to, from) {
       this.breadcrumb = this.naver.setBreadcrumb(to);
       this.recent = this.naver.saveStore(to);
+      this.changeIsLogin(to);
     }
   },
   created() {
@@ -182,6 +187,19 @@ export default {
       this.$router.push({
         path: nav.path,
       });
+    },
+    changeIsLogin (to) {
+      console.log(/\/account/.test(to.path), 'toto')
+      if (/\/account/.test(to.path)) {
+        this.isLogin = true;
+        localStorage.removeItem(USERINFO);
+        localStorage.removeItem(PERMISSION);
+        localStorage.removeItem(MQJ_TOKEN);
+        localStorage.removeItem(AUTHORIZATION);
+        localStorage.removeItem(TOKEN);
+      } else {
+        this.isLogin = false;
+      }
     },
 
     toRecent (link) {

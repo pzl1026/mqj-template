@@ -8,7 +8,7 @@
           <p class="line"></p>
           <p class="main-title">开放平台</p>
         </h2>
-        <img class="logo" src="@/assets/logo/logo3.png" alt="logo"/>
+        <img class="logo" src="@/assets/logo.png" alt="logo"/>
       </div>
       <div class="login-body">
         <div class="login-body-content">
