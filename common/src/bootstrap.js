@@ -1,5 +1,5 @@
 import Vue, {createApp} from 'vue';
-import App from './App/vue';
+import App from '@/widgets/layout';
 import {createRouter, createWebHashHistory} from 'vue-router';
 import 'ant-design-vue/dist/antd.css';
 import routes from '@/router/vue';

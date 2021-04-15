@@ -15,12 +15,13 @@
           <template #title>
             <span class="submenu-title-wrapper">
               <a-icon type="appstore" />
-              <AppstoreOutlined />
+              <!-- <AppstoreOutlined /> -->
+              <component :is="item.meta.icon"></component>
               <span>{{item.name}}</span>
             </span>
           </template>
           <a-menu-item :key="child.path" v-for="child in item.children" @click="toPush(child, item.path)">
-            <AppstoreOutlined />
+            <!-- <AppstoreOutlined /> -->
             <span>{{child.name}}</span>
           </a-menu-item>
         </a-sub-menu>

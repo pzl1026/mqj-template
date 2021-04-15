@@ -3,6 +3,9 @@ import {loadComponent} from '@/util';
 export default {
   path: '/sale',
   name: '售后',
+  meta: {
+    icon: 'UserOutlined',
+  },
   // component: loadComponent('app3', './hello'),
   children: [
     {

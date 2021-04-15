@@ -5,7 +5,7 @@ export default {
   name: '商品管理',
   // component: loadComponent('app3', './pages', 'Goods'),
   meta: {
-
+    icon: 'UserOutlined',
   },
   children: [
     {

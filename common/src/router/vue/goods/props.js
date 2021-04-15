@@ -3,6 +3,9 @@ import {loadComponent} from '@/util';
 export default {
   path: '/props',
   name: '属性管理',
+  meta: {
+    icon: 'UserOutlined',
+  },
   // component: loadComponent('app3', './hello'),
   children: [
     {
